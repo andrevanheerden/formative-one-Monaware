@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+
+body {
+  font-family: "Chakra Petch";
+}
+
+/* Navbar.css */
+.navbar-container {
+  width: 276px;
+  height: 684px;
+  background-color: #020504;
+  padding: 20px;
+  color: white;
+  border-radius: 20px;
+  margin: 20px;
+  border-color: #AB0E0B;
+  border-style: solid;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 220px;
+  background-color: #020504;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 32px;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 4px;
+  border-color: #AB0E0B;
+  border-style: solid;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-link {
+  margin: 10px 0;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 32px;
+  color: white;
+  text-decoration: none;
+}
