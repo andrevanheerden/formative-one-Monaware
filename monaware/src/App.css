@@ -40,7 +40,10 @@
 
 body {
   font-family: "Chakra Petch";
+  background-image: url(Assets/images/LB_W1920xH3004.jpg);
 }
+
+
 
 
 
@@ -48,7 +51,7 @@ body {
 .navbar-container {
   width: 276px;
   height: 684px;
-  background-color: #020504;
+  background-color: rgb(2, 5, 4, 0.95);
   padding: 20px;
   color: white;
   border-radius: 20px;
@@ -102,7 +105,7 @@ body {
 .InfoCardBody {
   width: 563px;
   height: 920px;
-  background-color: #020504;
+  background-color: rgb(2, 5, 4, 0.95);
   color: white;
   border-radius: 20px;
   margin: 20px;
@@ -131,4 +134,45 @@ body {
   font-family: "Chakra Petch", sans-serif;
   font-size: 20px;
   margin: 20px;
+}
+
+
+/*AbilityScore*/
+
+
+/* Card Styles */
+.AbilityScoreBody {
+  width: 700px;
+  height: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
+
+}
+
+/* Title Styles */
+.radar-title {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px;
+  color: white; /* Change title text color */
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+/* Radar Chart Legend Styles */
+.chartjs-legend {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: white; /* Change legend text color */
+}
+
+canvas {
+  display: block; /* Ensure canvas is not inline */
+  width: 700px !important; /* Force canvas to take full width */
+  height: 700px !important; /* Force canvas to take full height */
 }
