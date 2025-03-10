@@ -9,7 +9,8 @@ const InfoCard = () => {
   const cardDetails = [
     {
       Image: AdultBlackDragon,
-      Title: "AdultBlack Dragon",
+      Title: "Adult Black Dragon",
+      HP: "195",
       size: "Huge",
       type: "Dragon",
       alignment: "chaotic evil",
@@ -29,6 +30,7 @@ const InfoCard = () => {
          <Card.Img variant="top" src={card.Image} alt="Card image" className='InfoCardImg' />
           <Card.Title className='InfoCardTitle'>{card.Title}</Card.Title>
           <Card.Text className='InfoCardText'>
+            <p>HP : {card.HP}</p>
             <p>Size : {card.size}</p>
             <p>Type : {card.type}</p>
             <p>Alignment : {card.alignment}</p>

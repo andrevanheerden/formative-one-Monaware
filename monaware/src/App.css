@@ -41,6 +41,7 @@
 body {
   font-family: "Chakra Petch";
   background-image: url(Assets/images/LB_W1920xH3004.jpg);
+  background-repeat: no-repeat;
 }
 
 
@@ -71,7 +72,7 @@ body {
   font-size: 32px;
   color: #ffffff;
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 15px;
   border-color: #AB0E0B;
   border-style: solid;
 }
@@ -103,8 +104,8 @@ body {
 /*InfoCard*/
 
 .InfoCardBody {
-  width: 563px;
-  height: 920px;
+ width: 563px;
+  height: 900px;
   background-color: rgb(2, 5, 4, 0.95);
   color: white;
   border-radius: 20px;
@@ -117,23 +118,23 @@ body {
 }
 
 .InfoCardImg {
-  width: 383px;
-  height: 383px;
+  width: 340px;
+  height: 340px;
   border-radius: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .InfoCardTitle {
   font-family: "Chakra Petch", sans-serif;
   font-size: 24px;
   font-weight: 600;
-  margin: 20px;
+  margin: 10px;
 }
 
 .InfoCardText{
   font-family: "Chakra Petch", sans-serif;
   font-size: 20px;
-  margin: 20px;
+  margin: 10px;
 }
 
 
@@ -175,4 +176,89 @@ canvas {
   display: block; /* Ensure canvas is not inline */
   width: 700px !important; /* Force canvas to take full width */
   height: 700px !important; /* Force canvas to take full height */
+}
+
+/*SavingThrows*/
+
+
+/* Card Styles */
+.SavingThrowsBody {
+  width: 700px;
+  height: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
+
+}
+
+/* Title Styles */
+.SavingThrows-title {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px;
+  color: white; /* Change title text color */
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+/* Radar Chart Legend Styles */
+.chartjs-legend {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: white; /* Change legend text color */
+}
+
+canvas {
+  display: block; /* Ensure canvas is not inline */
+  width: 700px !important; /* Force canvas to take full width */
+  height: 700px !important; /* Force canvas to take full height */
+}
+
+
+/*movement*/
+
+/* General Card Styling */
+.MovementBody {
+  background-color:rgb(2, 5, 4, 0.95); /* Light background color */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 600px; /* Slightly larger card to accommodate the chart */
+  height: 900px; /* Card height */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+}
+
+/* Card Title Styling */
+.Movement-title {
+  font-size: 1.5rem; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  color: #fff; /* Dark text color */
+  margin-bottom: 20px; /* Space below the title */
+  text-align: center; /* Center-align the title */
+}
+
+/* Chart Container Styling */
+.Movement-container {
+  width: 540px; /* Set chart container width */
+  height: 800px; /* Set chart container height */
+  display: flex;
+  justify-content: center; /* Center the chart horizontally */
+  align-items: center; /* Center the chart vertically */
+}
+
+/* Chart.js Bar Chart Styling */
+.chartjs-render-monitor {
+  background-color: #fff; /* White background for the chart */
+  border-radius: 8px; /* Rounded corners for the chart */
+  padding: 15px; /* Padding inside the chart */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Make chart take full width of the container */
+  height: 100%; /* Make chart take full height of the container */
 }

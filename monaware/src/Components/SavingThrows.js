@@ -4,20 +4,22 @@ import { Chart as ChartJS, LineElement, PointElement, Tooltip, Legend, RadialLin
 import { Radar } from 'react-chartjs-2';
 import '../App.css';
 
-// Static data//
-const AdultBlackDragonAbilityScore = [23, 14, 21, 14, 13, 17];
+
+// Static data
+const AdultBlackDragonSavingThrows = [0, 7, 10, 0, 6, 8];
+
 
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
-const AbilityScore = () => {
+const SavingThrows = () => {
   // Static data
-  const data = {
+  const SavingThrowsData = {
     labels: ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'],
     datasets: [
       {
-        label: 'Ability Scores',
-        data: AdultBlackDragonAbilityScore, // Example ability scores
+        label: 'Saving Throws',
+        data: AdultBlackDragonSavingThrows, 
        
         borderColor: 'rgba(171, 14, 11, 1)', // Border color
         borderWidth: 2, // Border width
@@ -72,16 +74,19 @@ const AbilityScore = () => {
     },
   };
 
+
+
+
   return (
     <Card>
-      <Card.Body className="AbilityScoreBody">
-        <Card.Title className="radar-title">Ability Scores Radar Chart</Card.Title>
-        <div className="chart-container">
-          <Radar data={data} options={options} />
+      <Card.Body className="SavingThrowsBody">
+        <Card.Title className="SavingThrows-title">Ability Scores Radar Chart</Card.Title>
+        <div className="SavingThrows-container">
+          <Radar data={SavingThrowsData} options={options} />
         </div>
       </Card.Body>
     </Card>
   );
 };
 
-export default AbilityScore;
+export default SavingThrows;
