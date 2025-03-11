@@ -55,7 +55,28 @@ body {
   padding: 20px;
 }
 
+.Comparison {
+  flex-grow: 1; /* Take up remaining space */
+  margin-left: 316px; /* Offset by navbar width + padding */
+  padding: 20px;
+}
 
+/* Grid Items for Home*/
+.Info-card {
+  grid-column: 1 / 2; /* First column */
+  grid-row: 1 / 2; /* First row */
+}
+
+.main-comparison-card {
+  width: 1500px; /* Fixed width for the main card */
+  height: 3009px; /* Fixed height for the main card */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+  padding: 20px;
+  display: flex; /* Change to flexbox */
+  gap: 20px; /* Space between items */
+}
 
 /* Main Card Container */
 .main-card {
@@ -71,11 +92,14 @@ body {
   gap: 20px; /* Space between grid items */
 }
 
-/* Grid Items */
-.Info-card {
-  grid-column: 1 / 2; /* First column */
-  grid-row: 1 / 2; /* First row */
+
+
+/* Grid Items for Home */
+.Info-card, .Comparison {
+  flex: 1 1 45%; /* Take up 45% of the container width, adjust as needed */
+  /* Add any other necessary styles */
 }
+
 
 .Ability-score {
   grid-column: 2 / 3; /* Second column */
@@ -101,6 +125,10 @@ body {
   grid-column: 2 / 3; /* Second column */
   grid-row: 3 / 4; /* Third row */
 }
+
+
+
+
 
 
 
@@ -190,22 +218,30 @@ body {
 
 /*InfoCard*/
 
-.InfoCardBody {
- width: 563px;
-  height: 900px;
-  background-color: rgb(2, 5, 4, 0.95);
-  color: white;
-  border-radius: 20px;
-  border-color: #AB0E0B;
-  border-style: solid;
-  margin: 20px;
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center; 
+/* Cards Container */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next row */
+  gap: 20px; /* Space between cards */
+  justify-content: flex-start; /* Align cards to the start */
+  padding: 20px; /* Padding around the container */
 }
 
+/* Individual Card */
+.info-card {
+  width: 563px; /* Fixed width for each card */
+  background-color: rgba(2, 5, 4, 0.95); /* Background color */
+  color: white;
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Border color and width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px; /* Padding inside the card */
+}
+
+/* Card Image */
 .InfoCardImg {
   width: 340px;
   height: 340px;
@@ -213,6 +249,7 @@ body {
   margin-top: 20px;
 }
 
+/* Card Title */
 .InfoCardTitle {
   font-family: "Chakra Petch", sans-serif;
   font-size: 24px;
@@ -220,11 +257,15 @@ body {
   margin: 10px;
 }
 
-.InfoCardText{
+/* Card Text */
+.InfoCardText {
   font-family: "Chakra Petch", sans-serif;
   font-size: 20px;
   margin: 10px;
 }
+
+
+
 
 
 /*AbilityScore*/
@@ -233,7 +274,7 @@ body {
 /* Card Styles */
 .AbilityScoreBody {
   width: 700px;
-  height: 860px;
+  height: 900px;
   border-color: #AB0E0B;
   border-style: solid;
   margin: 20px auto;

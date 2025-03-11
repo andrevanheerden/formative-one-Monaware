@@ -10,6 +10,7 @@ const InfoCard = () => {
     {
       Image: AdultBlackDragon,
       Title: "Adult Black Dragon",
+      AC: "19",
       HP: "195",
       size: "Huge",
       type: "Dragon",
@@ -20,17 +21,23 @@ const InfoCard = () => {
       languages: "common draconic",
       challengeRating: "14",
       XP: "11500"
-    }
+    },
   ];
 
   const displayCard = (card, index) => {
     return (
-      <Card key={index}>
+      <Card key={index} className="info-card">
         <Card.Body className='InfoCardBody'>
-         <Card.Img variant="top" src={card.Image} alt="Card image" className='InfoCardImg' />
+          {/* Image */}
+          <Card.Img variant="top" src={card.Image} alt="Card image" className='InfoCardImg' />
+
+          {/* Title */}
           <Card.Title className='InfoCardTitle'>{card.Title}</Card.Title>
+
+          {/* Card Details */}
           <Card.Text className='InfoCardText'>
             <p>HP : {card.HP}</p>
+            <p>AC : {card.AC}</p>
             <p>Size : {card.size}</p>
             <p>Type : {card.type}</p>
             <p>Alignment : {card.alignment}</p>
