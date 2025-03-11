@@ -262,3 +262,29 @@ canvas {
   width: 100%; /* Make chart take full width of the container */
   height: 100%; /* Make chart take full height of the container */
 }
+
+
+
+/*Attacks*/
+
+.AttackBody {
+  width: 700px;
+  height: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
+
+}
+
+/* Title Styles */
+.AttackTitle {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px;
+  color: white; /* Change title text color */
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
