@@ -1,11 +1,12 @@
 .App {
-  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  background-image: url(Assets/images/LB_W1920xH3004.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -45,22 +46,103 @@ body {
 }
 
 
+/* General layout */
 
-
-
-/* Navbar */
-.navbar-container {
-  width: 276px;
-  height: 684px;
-  background-color: rgb(2, 5, 4, 0.95);
+/* Home Page Layout */
+.Home {
+  flex-grow: 1; /* Take up remaining space */
+  margin-left: 316px; /* Offset by navbar width + padding */
   padding: 20px;
-  color: white;
-  border-radius: 20px;
-  margin: 20px;
-  border-color: #AB0E0B;
-  border-style: solid;
 }
 
+
+
+/* Main Card Container */
+.main-card {
+  width: 1500px; /* Fixed width for the main card */
+  height: 3009px; /* Fixed height for the main card */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-rows: repeat(3, 1fr); /* Three rows */
+  gap: 20px; /* Space between grid items */
+}
+
+/* Grid Items */
+.Info-card {
+  grid-column: 1 / 2; /* First column */
+  grid-row: 1 / 2; /* First row */
+}
+
+.Ability-score {
+  grid-column: 2 / 3; /* Second column */
+  grid-row: 1 / 2; /* First row */
+}
+
+.Saving-throws {
+  grid-column: 2 / 3; /* Second column */
+  grid-row: 2 / 3; /* Second row */
+}
+
+.MovementVision {
+  grid-column: 1 / 2; /* First column */
+  grid-row: 2 / 3; /* Second row */
+}
+
+.Attacks {
+  grid-column: 1 / 2; /* First column */
+  grid-row: 3 / 4; /* Third row */
+}
+
+.Skills {
+  grid-column: 2 / 3; /* Second column */
+  grid-row: 3 / 4; /* Third row */
+}
+
+
+
+
+/* Fixed Logo Card */
+.fixed-logo-card {
+  position: fixed;
+  top: 20px;
+  left: 5px;
+  width: 300px; /* Fixed width for the navbar */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  z-index: 1000; /* Ensure it stays on top of other content */
+  padding: 10px;
+
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+}
+
+.fixed-logo-card .navbar-logo {
+  height: 120px; /* Adjust height as needed */
+  width: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto; /* Center the logo horizontally */
+}
+
+/* Navbar (Sidebar) */
+.navbar-container {
+  width: 276px; /* Fixed width for the navbar */
+  margin-left: 5px;
+  height: 360px; /* Full height */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+  padding: 20px;
+  color: white;
+  position: fixed; /* Fixed position to keep it on the left */
+  left: 0;
+  top: 0;
+  margin-top: 180px;
+}
+
+/* Search Form */
 .search-form {
   margin-bottom: 20px;
 }
@@ -75,11 +157,14 @@ body {
   border-radius: 15px;
   border-color: #AB0E0B;
   border-style: solid;
+  margin-left: 15px;
 }
 
+/* Navigation Links */
 .nav-links {
   display: flex;
   flex-direction: column;
+
 }
 
 .nav-link {
@@ -88,14 +173,16 @@ body {
   font-size: 32px;
   color: white;
   text-decoration: none;
+  text-align: left;
+  margin-left: 20px;
 }
 
-.nav-link:hover{
+.nav-link:hover {
   font-size: 34px;
   font-weight: 600;
 }
 
-.nav-link:active{
+.nav-link:active {
   font-size: 32px;
   font-weight: 700;
 }
@@ -109,6 +196,8 @@ body {
   background-color: rgb(2, 5, 4, 0.95);
   color: white;
   border-radius: 20px;
+  border-color: #AB0E0B;
+  border-style: solid;
   margin: 20px;
   display: flex; 
   flex-direction: column; 
@@ -144,10 +233,12 @@ body {
 /* Card Styles */
 .AbilityScoreBody {
   width: 700px;
-  height: 900px;
+  height: 860px;
+  border-color: #AB0E0B;
+  border-style: solid;
   margin: 20px auto;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
 
 }
@@ -184,12 +275,13 @@ canvas {
 /* Card Styles */
 .SavingThrowsBody {
   width: 700px;
-  height: 900px;
+  height: 860px;
+  border-color: #AB0E0B;
+  border-style: solid;
   margin: 20px auto;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
-
 }
 
 /* Title Styles */
@@ -226,16 +318,14 @@ canvas {
 
 /* General Card Styling */
 .MovementBody {
-  background-color:rgb(2, 5, 4, 0.95); /* Light background color */
-  border: 1px solid #ddd; /* Light border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 20px; /* Padding inside the card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 600px; /* Slightly larger card to accommodate the chart */
-  height: 900px; /* Card height */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center content horizontally */
+  width: 700px;
+  height: 860px;
+  border-color: #AB0E0B;
+  border-style: solid;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
 }
 
 /* Card Title Styling */
@@ -254,6 +344,7 @@ canvas {
   display: flex;
   justify-content: center; /* Center the chart horizontally */
   align-items: center; /* Center the chart vertically */
+  margin-left: 80px;
 }
 
 /* Chart.js Bar Chart Styling */
@@ -268,27 +359,30 @@ canvas {
 
 
 
+/*attacks*/
 
-
-
-/*Attacks*/
 
 /* Container for all cards */
 .card-container {
   display: flex;
   flex-wrap: wrap;
+  border-radius: 20px;
   justify-content: center;
-  gap: 20px; /* Adds space between cards */
+  gap: 80px; /* Adds space between cards */
   padding: 20px;
+
 }
 
 /* Card Body Styles */
 .AttackBody {
-  width: 372px; /* Fixed width for consistency */
+  width: 100%; /* Adjust width as needed */
   min-height: 330px; /* Use min-height instead of fixed height */
   margin: 0; /* Remove auto margin */
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
+  margin-left: -20px;
+  border-color: #AB0E0B;
+  border-style: solid;
   background-color: rgba(2, 5, 4, 0.95); /* Dark background for better contrast */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visual separation */
 }
@@ -358,20 +452,19 @@ canvas {
 
 /*Skills*/
 
-.SkillCard-container {
+.card-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; /* Adds space between cards */
   padding: 20px;
 }
 
 .SkillBody {
-  width: 372px; /* Fixed width for consistency */
-  min-height: 330px; /* Use min-height instead of fixed height */
-  margin: 0; /* Remove auto margin */
+  width: 500px; /* Adjust width as needed */
+  min-height: 500px; /* Adjust height as needed */
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
+  border-color: #AB0E0B;
+  border-style: solid;
   background-color: rgba(2, 5, 4, 0.95); /* Dark background for better contrast */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visual separation */
 }
@@ -387,22 +480,37 @@ canvas {
   margin-top: 10px;
 }
 
-.damage-types {
+.skills-container {
+  display: flex;
+  gap: 20px; /* Space between columns */
+}
+
+.skill-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 20px; /* Space between categories */
+  flex: 1; /* Each column takes equal space */
+}
+
+.skill-category {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between skills in a category */
   color: #fff;
+  font-weight: 600;
   font-family: "Chakra Petch", sans-serif;
 }
 
-.damage-type {
+.skill-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #fff;
+  font-weight: 400;
+  font-family: "Chakra Petch", sans-serif;
 }
 
-.SkillHexagon {
+.hexagon {
   width: 60px;
   height: 60px;
   background-color: #AB0E0B;
@@ -412,7 +520,7 @@ canvas {
   justify-content: center;
 }
 
-.SkillHexagon input {
+.hexagon input {
   width: 80%;
   text-align: center;
   border: none;

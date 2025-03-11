@@ -1,24 +1,12 @@
 import React from "react";
-import InfoCard from "../Components/InfoCard";
-import AbilityScore from "../Components/AbilityScore";
-import SavingThrows from "../Components/SavingThrows";
-import Movement from "../Components/Movement";
-
-import "../App.css";
-
-
 
 function Comparison() {
   return (
-
-<div className="Comparison">
-
-      
-      
-
-
-</div>
-
+    <div>
+      {/* Do not include the Navbar here */}
+      <h1>Comparison Page</h1>
+      {/* Add other content for the Comparison page */}
+    </div>
   );
 }
 

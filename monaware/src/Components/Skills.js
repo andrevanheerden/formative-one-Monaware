@@ -43,26 +43,49 @@ const SkillsCard = () => {
   return (
     <div className="card-container">
       <Card style={{ width: '24rem', margin: '10px' }}>
-        <Card.Body className='AttackBody'>
-          <Card.Title className='AttackTitle'>Skills</Card.Title>
+        <Card.Body className='SkillBody'>
+          <Card.Title className='SkillTitle'>Skills</Card.Title>
           <div className="skills-container">
-            {Object.entries(skills).map(([category, skillList]) => (
-              <div key={category} className="skill-category">
-                <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
-                {Object.entries(skillList).map(([skill, value]) => (
-                  <div className="skill-item" key={skill}>
-                    <label>{skill}:</label>
-                    <div className="hexagon">
-                      <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => handleSkillChange(category, skill, e.target.value)}
-                      />
+            <div className="skill-column">
+              {/* First Column */}
+              {Object.entries(skills).slice(0, 3).map(([category, skillList]) => (
+                <div key={category} className="skill-category">
+                  <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                  {Object.entries(skillList).map(([skill, value]) => (
+                    <div className="skill-item" key={skill}>
+                      <label>{skill}:</label>
+                      <div className="hexagon">
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => handleSkillChange(category, skill, e.target.value)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ))}
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="skill-column">
+              {/* Second Column */}
+              {Object.entries(skills).slice(3).map(([category, skillList]) => (
+                <div key={category} className="skill-category">
+                  <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                  {Object.entries(skillList).map(([skill, value]) => (
+                    <div className="skill-item" key={skill}>
+                      <label>{skill}:</label>
+                      <div className="hexagon">
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => handleSkillChange(category, skill, e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </Card.Body>
       </Card>

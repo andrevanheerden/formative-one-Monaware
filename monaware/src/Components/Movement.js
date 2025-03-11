@@ -32,12 +32,44 @@ const Movement = () => {
     ],
   };
 
+  // Chart options
+  const options = {
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value + ' ft'; // Append 'ft' to the y-axis ticks
+          },
+          color: 'white', // Change tick text color
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
+        },
+      },
+      x: {
+        ticks: {
+          color: 'white', // Change tick text color
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white', // Change legend text color
+        },
+      },
+    },
+  };
+
   return (
     <Card>
       <Card.Body className="MovementBody">
         <Card.Title className="Movement-title">Ability Scores Bar Chart</Card.Title>
         <div className="Movement-container">
-          <Bar data={data} />
+          <Bar data={data} options={options} />
         </div>
       </Card.Body>
     </Card>
