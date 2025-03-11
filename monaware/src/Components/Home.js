@@ -4,6 +4,7 @@ import AbilityScore from "../Components/AbilityScore";
 import SavingThrows from "../Components/SavingThrows";
 import Movement from "../Components/Movement";
 import AttacksCard from "../Components/AttacksCard";
+import SkillsCard from "../Components/Skills";
 import "../App.css";
 
 
@@ -31,7 +32,10 @@ function Home() {
     <div className="Attacks">
       <AttacksCard />
     </div>
-      
+
+    <div className="Skills">
+      <SkillsCard />
+    </div>
       
 
 

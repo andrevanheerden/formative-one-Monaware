@@ -219,6 +219,9 @@ canvas {
 }
 
 
+
+
+
 /*movement*/
 
 /* General Card Styling */
@@ -265,16 +268,29 @@ canvas {
 
 
 
+
+
+
 /*Attacks*/
 
+/* Container for all cards */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Adds space between cards */
+  padding: 20px;
+}
+
+/* Card Body Styles */
 .AttackBody {
-  width: 700px;
-  height: 900px;
-  margin: 20px auto;
+  width: 372px; /* Fixed width for consistency */
+  min-height: 330px; /* Use min-height instead of fixed height */
+  margin: 0; /* Remove auto margin */
   padding: 20px;
   border-radius: 8px;
-  background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */
-
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background for better contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visual separation */
 }
 
 /* Title Styles */
@@ -286,5 +302,121 @@ canvas {
   color: white; /* Change title text color */
   text-align: center;
   margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+/* Text Styles */
+.AttackText {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 20px;
+  color: white; /* Change title text color */
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+/* Damage Types Container */
+.damage-types {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  color: #fff;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+/* Individual Damage Type */
+.damage-type {
+  text-align: center;
+}
+
+/* Hexagon Input Container */
+.hexagon {
+  width: 60px;
+  height: 60px;
+  background-color: #AB0E0B;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hexagon Input Field */
+.hexagon input {
+  width: 80%;
+  text-align: center;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+
+
+
+
+/*Skills*/
+
+.SkillCard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Adds space between cards */
+  padding: 20px;
+}
+
+.SkillBody {
+  width: 372px; /* Fixed width for consistency */
+  min-height: 330px; /* Use min-height instead of fixed height */
+  margin: 0; /* Remove auto margin */
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background for better contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visual separation */
+}
+
+.SkillTitle {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px;
+  color: white; /* Change title text color */
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.damage-types {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  color: #fff;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+.damage-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SkillHexagon {
+  width: 60px;
+  height: 60px;
+  background-color: #AB0E0B;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SkillHexagon input {
+  width: 80%;
+  text-align: center;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: "Chakra Petch", sans-serif;
 }
