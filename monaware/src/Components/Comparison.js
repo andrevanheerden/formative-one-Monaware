@@ -2,6 +2,8 @@ import React from "react";
 import "../App.css";
 import InfoComparison from "./InfoComparison";
 import AbilityComparison from "./AbilityComparison";
+import MovementComparison from "./MovementComparison";
+import SkillsComparison from "./SkillsComparison";
 
 function Comparison() {
   return (
@@ -15,6 +17,14 @@ function Comparison() {
 
         <div className="Ability-Comparison">
           <AbilityComparison />
+        </div>
+
+        <div className="movement-comp">
+          <MovementComparison />
+        </div>
+
+        <div className="Skill-com">
+          <SkillsComparison />
         </div>
 
 

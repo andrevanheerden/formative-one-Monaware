@@ -123,7 +123,7 @@ const AbilityComparison = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
       {/* First Card */}
-      <Card style={{ width: '45%', margin: '10px' }}>
+      <Card style={{ width: '45%', marginRight: '60px' }}>
         <Card.Body className="AbilityScoreBody">
           <Card.Title className="radar-title">Ability Scores </Card.Title>
           <div className="chart-container">
@@ -133,7 +133,7 @@ const AbilityComparison = () => {
       </Card>
 
       {/* Second Card */}
-      <Card style={{ width: '45%', margin: '10px' }}>
+      <Card style={{ width: '45%', marginRight: '60px' }}>
         <Card.Body className="SavingThrowsBody">
           <Card.Title className="SavingThrows-title">Saving Throws</Card.Title>
           <div className="SavingThrows-container">
