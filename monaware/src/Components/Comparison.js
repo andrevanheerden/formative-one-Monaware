@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import InfoComparison from "./InfoComparison";
+import AbilityComparison from "./AbilityComparison";
 
 function Comparison() {
   return (
@@ -12,6 +13,9 @@ function Comparison() {
           <InfoComparison />
         </div>
 
+        <div className="Ability-Comparison">
+          <AbilityComparison />
+        </div>
 
 
 

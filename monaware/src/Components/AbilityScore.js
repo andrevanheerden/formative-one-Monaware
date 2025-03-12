@@ -18,7 +18,6 @@ const AbilityScore = () => {
       {
         label: 'Ability Scores',
         data: AdultBlackDragonAbilityScore, // Example ability scores
-       
         borderColor: 'rgba(171, 14, 11, 1)', // Border color
         borderWidth: 2, // Border width
         pointBackgroundColor: 'rgba(171, 14, 11, 1)', // Point fill color

@@ -67,16 +67,12 @@ body {
   grid-row: 1 / 2; /* First row */
 }
 
-.main-comparison-card {
-  width: 1500px; /* Fixed width for the main card */
-  height: 3009px; /* Fixed height for the main card */
-  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
-  border-radius: 20px;
-  border: 2px solid #AB0E0B; /* Red border */
-  padding: 20px;
-  display: flex; /* Change to flexbox */
-  gap: 20px; /* Space between items */
-}
+
+
+
+
+
+
 
 /* Main Card Container */
 .main-card {
@@ -568,4 +564,48 @@ canvas {
   background: none;
   color: #fff;
   font-family: "Chakra Petch", sans-serif;
+}
+
+
+
+/* Comparison page  */
+
+.main-comparison-card {
+  width: 1500px; /* Fixed width for the main card */
+  height: auto; /* Adjust height to fit content */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  gap: 20px; /* Space between items */
+}
+
+.cards-container {
+  display: flex;
+  gap: 20px; /* Space between info cards */
+  justify-content: center; /* Center the cards horizontally */
+}
+
+.info-card {
+  flex: 1; /* Allow cards to take equal space */
+  background-color: #1e1e1e; /* Dark background for info cards */
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #AB0E0B; /* Red border */
+}
+
+.charts-container {
+  display: flex;
+  gap: 20px; /* Space between charts */
+  justify-content: center; /* Center the charts horizontally */
+}
+
+.chart-card {
+  flex: 1; /* Allow charts to take equal space */
+  background-color: #1e1e1e; /* Dark background for chart cards */
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #AB0E0B; /* Red border */
 }
