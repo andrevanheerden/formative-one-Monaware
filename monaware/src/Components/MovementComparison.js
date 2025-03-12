@@ -86,7 +86,7 @@ ChartJS.register(
       };
   
     return (
-      <Card style={{ width: '1200px', height: '900px', margin: 'auto' }}>
+      <Card style={{ width: '1200px', height: '900px', margin: 'auto', backgroundColor: 'rgba(2, 5, 4, 0.95)' }}>
         <Card.Body className="MovementComparisonBody">
           <Card.Title className="MovementComparison-title">Dragon Movement and Vision Comparison</Card.Title>
           <div className="MovementComparison-container">

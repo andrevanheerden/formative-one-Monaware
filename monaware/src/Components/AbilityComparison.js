@@ -4,6 +4,7 @@ import { Chart as ChartJS, LineElement, PointElement, Tooltip, Legend, RadialLin
 import { Radar } from 'react-chartjs-2';
 import '../App.css';
 
+
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
@@ -74,7 +75,7 @@ const AbilityComparison = () => {
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgb(0, 162, 255)',
         fill: true,
-        backgroundColor: 'rgb(0, 162, 255, 0.5)', // Grey fill color
+        backgroundColor: 'rgba(0, 162, 255, 0.5)', // Grey fill color
       },
     ],
   };
@@ -85,10 +86,10 @@ const AbilityComparison = () => {
       r: {
         angleLines: {
           display: true,
-          color: 'white',
+          color: '#fff',
         },
         grid: {
-          color: 'white',
+          color: '#fff',
         },
         suggestedMin: 0,
         suggestedMax: 25,

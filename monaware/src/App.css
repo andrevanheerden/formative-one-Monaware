@@ -204,11 +204,13 @@ body {
 .nav-link:hover {
   font-size: 34px;
   font-weight: 600;
+  color: #AB0E0B;
 }
 
 .nav-link:active {
   font-size: 32px;
   font-weight: 700;
+  color: #AB0E0B;
 }
 
 
@@ -221,6 +223,7 @@ body {
   gap: 20px; /* Space between cards */
   justify-content: flex-start; /* Align cards to the start */
   padding: 20px; /* Padding around the container */
+  
 }
 
 /* Individual Card */
@@ -390,12 +393,12 @@ canvas {
 
 /* Chart Container Styling */
 .Movement-container {
-  width: 540px; /* Set chart container width */
-  height: 800px; /* Set chart container height */
+  width: 100%; /* Set chart container width */
+  height: 700px; /* Set chart container height */
   display: flex;
   justify-content: center; /* Center the chart horizontally */
   align-items: center; /* Center the chart vertically */
-  margin-left: 80px;
+
 }
 
 /* Chart.js Bar Chart Styling */
@@ -419,7 +422,7 @@ canvas {
   flex-wrap: wrap;
   border-radius: 20px;
   justify-content: center;
-  gap: 80px; /* Adds space between cards */
+   gap: 50px;
   padding: 20px;
 
 }
@@ -518,6 +521,8 @@ canvas {
   border-style: solid;
   background-color: rgba(2, 5, 4, 0.95); /* Dark background for better contrast */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visual separation */
+  margin-right: 500px;
+
 }
 
 .SkillTitle {
@@ -653,9 +658,8 @@ canvas {
   width: 100%; /* Full width of the card */
   height: 800px; /* Fixed height to fit within the card */
   margin: auto; /* Center the container */
-  background-color: (2, 5, 4, 0.95); /* Slightly lighter background for the chart area */
-  border-radius: 8px; /* Rounded corners for the chart container */
-  padding: 10px; /* Add some padding inside the chart container */
+
+
 }
 
 /* Chart.js canvas styling */
@@ -676,33 +680,35 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: center; /* Center horizontally */
   padding: 20px;
-  
+  margin-right: 45%;
 }
 
 /* Card styling */
 .SkillsComparisonBody {
-  background-color: rgb(2, 5, 4, 0.95);
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.95); /* Dark background for the card */
+  color: white; /* Text color */
+  padding: 20px; /* Add some padding inside the card */
   border-radius: 20px;
   border: 2px solid #AB0E0B; /* Red border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  width: 1400px;
+  text-align: center; /* Center-align the title */
 }
 
 /* Title styling */
 .SkillsComparisonTitle {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 24px; /* Larger font size for the title */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Space below the title */
+  text-align: center; /* Center-align the title */
 }
 
-/* Grid layout for the two columns */
+/* Grid layout for the columns */
 .SkillsComparison-grid {
   display: flex;
-  gap: 20px; /* Space between the two columns */
+  gap: 20px; /* Space between the columns */
 }
 
 /* Column styling */
@@ -714,7 +720,7 @@ canvas {
 .SkillsComparison-category h4 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #f1c40f; /* Yellow color for headings */
+  color: #AB0E0B; /* Yellow color for headings */
 }
 
 /* Skill item styling */
@@ -733,7 +739,7 @@ canvas {
 .SkillsComparisonHexagon {
   width: 60px;
   height: 60px;
-  background-color: rgba(171, 14, 11, 1); /* Default hexagon color */
+  background-color: #3498db; /* Default hexagon color */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display: flex;
   justify-content: center;
@@ -741,12 +747,12 @@ canvas {
 }
 
 /* Different hexagon colors for the two datasets */
-.SkillsComparisonHexagon-color-1 {
-  background-color: #AB0E0B; /* Blue for Character 1 */
+.hexagon-color-1 {
+  background-color: rgba(171, 14, 11, 1); /* Blue for Character 1 */
 }
 
-.SkillsComparisonHexagon-color-2 {
-  background-color:rgb(0, 162, 255); /* Red for Character 2 */
+.hexagon-color-2 {
+  background-color: rgb(0, 162, 255); /* Red for Character 2 */
 }
 
 /* Input styling inside hexagons */

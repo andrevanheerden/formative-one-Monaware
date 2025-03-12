@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import "../App.css";
 
+const BlueDragonWyrmlingTitel = ['Blue Dragon Wyrmling'];
+const AdultBlackDragonTitel = ['Adult Black Dragon'];
+
 const SkillsComparison = () => {
   // State for two datasets (e.g., two characters' skills)
   const [skills1, setSkills1] = useState({
-    strength: { Athletics: 5 },
-    dexterity: { Acrobatics: 3, "Sleight of Hand": 2, Stealth: 7 },
-    intelligence: { Arcana: 4, History: 3, Investigation: 6, Nature: 2, Religion: 1 },
-    wisdom: { "Animal Handling": 3, Insight: 5, Medicine: 2, Perception: 4, Survival: 6 },
-    charisma: { Deception: 2, Intimidation: 8, Performance: 3, Persuasion: 11 },
+    strength: { Athletics: 0 },
+    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 7 },
+    intelligence: { Arcana: 0, History: 0, Investigation: 0, Nature: 0, Religion: 0 },
+    wisdom: { "Animal Handling": 0, Insight: 0, Medicine: 0, Perception: 0, Survival: 0 },
+    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 11 },
   });
 
   const [skills2, setSkills2] = useState({
-    strength: { Athletics: 7 },
-    dexterity: { Acrobatics: 5, "Sleight of Hand": 4, Stealth: 9 },
-    intelligence: { Arcana: 6, History: 4, Investigation: 7, Nature: 3, Religion: 2 },
-    wisdom: { "Animal Handling": 4, Insight: 6, Medicine: 3, Perception: 5, Survival: 7 },
-    charisma: { Deception: 3, Intimidation: 9, Performance: 4, Persuasion: 12 },
+    strength: { Athletics: 0 },
+    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 2 },
+    intelligence: { Arcana: 0, History: 0, Investigation: 0, Nature: 0, Religion: 0 },
+    wisdom: { "Animal Handling": 0, Insight: 0, Medicine: 0, Perception: 0, Survival: 0 },
+    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 4 },
   });
 
   // Function to handle skill changes for the first dataset
@@ -34,9 +37,13 @@ const SkillsComparison = () => {
     setSkills2(updatedSkills);
   };
 
-  // Split the data into two columns
+  // Split the data into two parts for each dataset
   const skillsEntries1 = Object.entries(skills1);
   const skillsEntries2 = Object.entries(skills2);
+
+  // Calculate the midpoint for splitting the data
+  const midpoint1 = Math.ceil(skillsEntries1.length / 2);
+  const midpoint2 = Math.ceil(skillsEntries2.length / 2);
 
   return (
     <div className="SkillsComparison-container">
@@ -44,27 +51,11 @@ const SkillsComparison = () => {
         <Card.Body className='SkillsComparisonBody'>
           <Card.Title className='SkillsComparisonTitle'>Skills Comparison</Card.Title>
           <div className="SkillsComparison-grid">
-            {/* First Column */}
+            {/* First Dataset */}
             <div className="SkillsComparison-column">
-              <h3>Character 1</h3>
-              {skillsEntries1.slice(0, 2).map(([category, skillList]) => (
-                <div key={category} className="SkillsComparison-category">
-                  <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
-                  {Object.entries(skillList).map(([skill, value]) => (
-                    <div className="SkillsComparison-item" key={skill}>
-                      <label>{skill}:</label>
-                      <div className="SkillsComparisonHexagon hexagon-color-1">
-                        <input
-                          type="text"
-                          value={value}
-                          onChange={(e) => handleSkillChange1(category, skill, e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-              {skillsEntries1.slice(2, 4).map(([category, skillList]) => (
+              <h3>{AdultBlackDragonTitel}</h3>
+              {/* First half of the first dataset */}
+              {skillsEntries1.slice(0, midpoint1).map(([category, skillList]) => (
                 <div key={category} className="SkillsComparison-category">
                   <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
                   {Object.entries(skillList).map(([skill, value]) => (
@@ -83,16 +74,38 @@ const SkillsComparison = () => {
               ))}
             </div>
 
-            {/* Second Column */}
             <div className="SkillsComparison-column">
-              <h3>Character 2</h3>
-              {skillsEntries2.slice(0, 2).map(([category, skillList]) => (
+              {/* Second half of the first dataset */}
+              {skillsEntries1.slice(midpoint1).map(([category, skillList]) => (
                 <div key={category} className="SkillsComparison-category">
                   <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
                   {Object.entries(skillList).map(([skill, value]) => (
                     <div className="SkillsComparison-item" key={skill}>
                       <label>{skill}:</label>
-                      <div className="SkillsComparisonHexagon SkillsComparisonHexagon-color-2">
+                      <div className="SkillsComparisonHexagon hexagon-color-1">
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => handleSkillChange1(category, skill, e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Second Dataset */}
+            <div className="SkillsComparison-column">
+              <h3>{BlueDragonWyrmlingTitel}</h3>
+              {/* First half of the second dataset */}
+              {skillsEntries2.slice(0, midpoint2).map(([category, skillList]) => (
+                <div key={category} className="SkillsComparison-category">
+                  <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                  {Object.entries(skillList).map(([skill, value]) => (
+                    <div className="SkillsComparison-item" key={skill}>
+                      <label>{skill}:</label>
+                      <div className="SkillsComparisonHexagon hexagon-color-2">
                         <input
                           type="text"
                           value={value}
@@ -103,13 +116,17 @@ const SkillsComparison = () => {
                   ))}
                 </div>
               ))}
-              {skillsEntries2.slice(2, 4).map(([category, skillList]) => (
+            </div>
+
+            <div className="SkillsComparison-column">
+              {/* Second half of the second dataset */}
+              {skillsEntries2.slice(midpoint2).map(([category, skillList]) => (
                 <div key={category} className="SkillsComparison-category">
                   <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
                   {Object.entries(skillList).map(([skill, value]) => (
                     <div className="SkillsComparison-item" key={skill}>
                       <label>{skill}:</label>
-                      <div className="SkillsComparisonHexagon SkillsComparisonHexagon-color-2">
+                      <div className="SkillsComparisonHexagon hexagon-color-2">
                         <input
                           type="text"
                           value={value}
