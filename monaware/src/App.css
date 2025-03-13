@@ -393,8 +393,8 @@ canvas {
 
 /* Chart Container Styling */
 .Movement-container {
-  width: 100%; /* Set chart container width */
-  height: 700px; /* Set chart container height */
+  width:90%; /* Set chart container width */
+  height: 90%; /* Set chart container height */
   display: flex;
   justify-content: center; /* Center the chart horizontally */
   align-items: center; /* Center the chart vertically */
