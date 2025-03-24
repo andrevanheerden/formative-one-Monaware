@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import "../App.css";
 
-const SkillsCard = () => {
+const SkillsCard = ({ monsterIndex }) => {
   const [skills, setSkills] = useState({
     strength: {
       Athletics: 0,
@@ -10,7 +11,7 @@ const SkillsCard = () => {
     dexterity: {
       Acrobatics: 0,
       "Sleight of Hand": 0,
-      Stealth: 7,
+      Stealth: 0,
     },
     intelligence: {
       Arcana: 0,
@@ -30,9 +31,46 @@ const SkillsCard = () => {
       Deception: 0,
       Intimidation: 0,
       Performance: 0,
-      Persuasion: 11,
+      Persuasion: 0,
     },
   });
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
+        const monsterData = response.data;
+
+        // Extract skills from the API response
+        const apiSkills = {};
+        if (monsterData.proficiencies) {
+          monsterData.proficiencies.forEach((proficiency) => {
+            if (proficiency.proficiency.name.startsWith("Skill:")) {
+              const skillName = proficiency.proficiency.name.split(": ")[1];
+              apiSkills[skillName] = proficiency.value;
+            }
+          });
+        }
+
+        // Update only the current values in the skills state
+        setSkills((prevSkills) => {
+          const updatedSkills = { ...prevSkills };
+          Object.entries(updatedSkills).forEach(([category, skillList]) => {
+            Object.keys(skillList).forEach((skill) => {
+              if (apiSkills[skill] !== undefined) {
+                updatedSkills[category][skill] = apiSkills[skill];
+              }
+            });
+          });
+          return updatedSkills;
+        });
+      } catch (err) {
+        console.error("Error fetching skills:", err);
+      }
+    };
+
+    if (monsterIndex) fetchSkills();
+  }, [monsterIndex]);
 
   const handleSkillChange = (category, skill, value) => {
     const updatedSkills = { ...skills };
