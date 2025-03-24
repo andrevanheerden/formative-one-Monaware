@@ -1,88 +1,147 @@
-import React from 'react';
-import Card from 'react-bootstrap/Card';
-import { Chart as ChartJS, LineElement, PointElement, Tooltip, Legend, RadialLinearScale } from 'chart.js';
-import { Radar } from 'react-chartjs-2';
-import '../App.css';
-
-
-// Static data
-const AdultBlackDragonSavingThrows = [0, 7, 10, 0, 6, 8];
-
+import React, { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import { Chart as ChartJS, LineElement, PointElement, Tooltip, Legend, RadialLinearScale } from "chart.js";
+import { Radar } from "react-chartjs-2";
+import axios from "axios";
+import "../App.css";
 
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
-const SavingThrows = () => {
-  // Static data
-  const SavingThrowsData = {
-    labels: ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'],
+const SavingThrows = ({ monsterIndex }) => {
+  const [savingThrows, setSavingThrows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchSavingThrows = async () => {
+      if (!monsterIndex) {
+        setError("Monster index is required to fetch saving throws.");
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
+        const monsterData = response.data;
+
+        // Initialize saving throws with default values of 0
+        const throws = {
+          Strength: 0,
+          Dexterity: 0,
+          Constitution: 0,
+          Intelligence: 0,
+          Wisdom: 0,
+          Charisma: 0,
+        };
+
+        // Extract saving throws from proficiencies
+        if (monsterData.proficiencies) {
+          monsterData.proficiencies.forEach((proficiency) => {
+            const name = proficiency.proficiency.name;
+            if (name.startsWith("Saving Throw:")) {
+              const ability = name.split(": ")[1];
+              throws[ability] = proficiency.value;
+            }
+          });
+        }
+
+        setSavingThrows(Object.values(throws));
+      } catch (err) {
+        console.error("Error fetching saving throws:", err);
+        setError("Failed to load saving throws.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSavingThrows();
+  }, [monsterIndex]);
+
+  if (loading) return <p>Loading saving throws...</p>;
+  if (error) return <p>{error}</p>;
+  if (!savingThrows.length) return <p>No saving throw data available.</p>;
+
+  // Create formatted labels with values
+  const abilityNames = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
+  const formattedLabels = abilityNames.map((ability, index) => {
+    const value = savingThrows[index];
+    const sign = value >= 0 ? '+' : '';
+    return `${ability} ${sign}${value}`;
+  });
+
+  const data = {
+    labels: formattedLabels,
     datasets: [
       {
-        label: 'Saving Throws',
-        data: AdultBlackDragonSavingThrows, 
-       
-        borderColor: 'rgba(171, 14, 11, 1)', // Border color
-        borderWidth: 2, // Border width
-        pointBackgroundColor: 'rgba(171, 14, 11, 1)', // Point fill color
-        pointBorderColor: '#333', // Point border color
-        pointHoverBackgroundColor: '#fff', // Point hover fill color
-        pointHoverBorderColor: 'rgba(171, 14, 11, 1)', // Point hover border color
-        fill: true, // Enable fill between points
-        backgroundColor: 'rgba(171, 14, 11, 0.5)', // Fill color
+        label: "Saving Throws",
+        data: savingThrows,
+        fill: true,
+        borderColor: "rgba(171, 14, 11, 1)",
+        borderWidth: 2,
+        pointBackgroundColor: "rgba(171, 14, 11, 1)",
+        pointBorderColor: "#333",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgba(171, 14, 11, 1)",
+        backgroundColor: "rgba(171, 14, 11, 0.5)",
       },
     ],
   };
 
-  // Options for the radar chart
   const options = {
     scales: {
       r: {
         angleLines: {
           display: true,
-          color: 'white', 
+          color: "white",
         },
         grid: {
-          color: 'white', 
+          color: "white",
         },
-        suggestedMin: 0, // Minimum value for the radial axis
-        suggestedMax: 25, // Maximum value for the radial axis
+        suggestedMin: 0,
+        suggestedMax: 25,
         pointLabels: {
-          color: 'white', // Change label text color
+          color: "white",
           font: {
-            size: 16, 
-            family: '"Chakra Petch", sans-serif', 
+            size: 16,
+            family: '"Chakra Petch", sans-serif',
           },
         },
       },
     },
-    responsive: true, // Make the chart responsive
-    maintainAspectRatio: false, // Allow the chart to stretch
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top', // Position of the legend
+        position: "top",
         labels: {
-          color: 'white', // Change legend text color to white
+          color: "white",
           font: {
-            size: 16, 
-            family: '"Chakra Petch", sans-serif', 
+            size: 16,
+            family: '"Chakra Petch", sans-serif',
           },
         },
       },
       tooltip: {
-        enabled: true, // Enable tooltips
+        enabled: true,
+        callbacks: {
+          label: function(context) {
+            return context.dataset.label + ': ' + context.raw;
+          }
+        }
       },
     },
   };
 
-
-
-
   return (
     <Card>
       <Card.Body className="SavingThrowsBody">
-        <Card.Title className="SavingThrows-title">Ability Scores Radar Chart</Card.Title>
+        <Card.Title className="SavingThrows-title">Saving Throws Radar Chart</Card.Title>
         <div className="SavingThrows-container">
-          <Radar data={SavingThrowsData} options={options} />
+          <Radar data={data} options={options} />
         </div>
       </Card.Body>
     </Card>
