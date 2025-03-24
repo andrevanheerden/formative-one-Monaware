@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
+import monsterImages from "../Assets/images/monsterImages"; // Import monster images
 import "../App.css";
 
 const InfoCard = ({ selectedMonster }) => {
@@ -26,10 +27,11 @@ const InfoCard = ({ selectedMonster }) => {
     }
   };
 
-  const getMonsterImage = (monster) => {
-    // Try to construct a plausible image URL based on the monster's index
-    const monsterIndex = monster.index || monster.name.toLowerCase().replace(/\s+/g, '-');
-    return `https://www.dnd5eapi.co/api/2014/images/monsters/${monsterIndex}.png`;
+  const getMonsterImage = (monsterIndex) => {
+    const imageEntry = monsterImages.sample.find(
+      (entry) => entry.description === monsterIndex
+    );
+    return imageEntry ? imageEntry.imageUrl : "https://via.placeholder.com/340";
   };
 
   if (loading) return <p>Loading monster...</p>;
@@ -45,7 +47,7 @@ const InfoCard = ({ selectedMonster }) => {
         {/* Monster Image */}
         <Card.Img
           variant="top"
-          src={getMonsterImage(monster)}
+          src={getMonsterImage(monster.index)}
           alt={monster.name}
           className="InfoCardImg"
         />
