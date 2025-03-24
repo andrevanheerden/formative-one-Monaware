@@ -65,13 +65,9 @@ const SavingThrows = ({ monsterIndex }) => {
   if (error) return <p>{error}</p>;
   if (!savingThrows.length) return <p>No saving throw data available.</p>;
 
-  // Create formatted labels with values
+  // Create labels without numbers
   const abilityNames = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
-  const formattedLabels = abilityNames.map((ability, index) => {
-    const value = savingThrows[index];
-    const sign = value >= 0 ? '+' : '';
-    return `${ability} ${sign}${value}`;
-  });
+  const formattedLabels = abilityNames;
 
   const data = {
     labels: formattedLabels,

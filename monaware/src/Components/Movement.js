@@ -1,75 +1,112 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
-import { Bar } from 'react-chartjs-2'; // Correct import with uppercase 'Bar'
+import { Bar } from 'react-chartjs-2';
 import '../App.css';
+import axios from "axios";
 
 // Register Chart.js components
 ChartJS.register(
-  BarElement, // Register the BarElement
-  CategoryScale, // Required for the x-axis
-  LinearScale, // Required for the y-axis
-  Tooltip, // For tooltips
-  Legend // For the legend
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
 );
 
-// Static data
-const AdultBlackDragonMovement = [40, 80, 40, 60, 120];
+const Movement = ({ monsterIndex }) => {
+  const [movementData, setMovementData] = useState([]);
+  const [labels] = useState(['walk', 'fly', 'swim', 'blindsight', 'darkvision']);
 
-const Movement = () => {
+  useEffect(() => {
+    if (!monsterIndex) {
+      console.error('Invalid monsterIndex:', monsterIndex);
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
+        const data = response.data;
+        console.log('API Response:', data);
+
+        const movement = [
+          parseInt(data.speed?.walk || 0, 10),
+          parseInt(data.speed?.fly || 0, 10),
+          parseInt(data.speed?.swim || 0, 10),
+          parseInt(data.senses?.blindsight || 0, 10),
+          parseInt(data.senses?.darkvision || 0, 10),
+        ];
+        console.log('Mapped Movement Data:', movement);
+        setMovementData(movement);
+      } catch (error) {
+        console.error('Error fetching movement data:', error);
+      }
+    };
+
+    fetchData();
+  }, [monsterIndex]);
+
   // Chart data
   const data = {
-    labels: ['SpeedWalking', 'SpeedFlying', 'SpeedSwimming', 'Blindsight', 'Darkvision'],
-    datasets: [
-      {
-        label: 'Movement And Vision',
-        data: AdultBlackDragonMovement, // Example ability scores
-        borderColor: 'rgba(171, 14, 11, 1)', // Border color
-        borderWidth: 2, // Border width
-        backgroundColor: 'rgba(171, 14, 11, 0.5)', // Fill color
-        color: 'white', // Change label text color
-      },
-    ],
+    labels,
+    datasets: [{
+      label: 'Movement And Vision (ft)',
+      data: movementData,
+      borderColor: 'rgba(171, 14, 11, 1)',
+      borderWidth: 2,
+      backgroundColor: 'rgba(171, 14, 11, 0.5)',
+    }],
   };
 
   // Chart options
   const options = {
+    responsive: true,
     scales: {
       y: {
+        beginAtZero: true,
         ticks: {
-          callback: function (value) {
-            return value + ' ft'; // Append 'ft' to the y-axis ticks
-          },
-          color: 'white', // Change tick text color
+          callback: (value) => `${value} ft`,
+          color: 'white',
         },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
-        },
+        grid: { color: 'rgba(255, 255, 255, 0.3)' },
       },
       x: {
-        ticks: {
-          color: 'white', // Change tick text color
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
-        },
+        ticks: { color: 'white' },
+        grid: { color: 'rgba(255, 255, 255, 0.3)' },
       },
     },
     plugins: {
       legend: {
-        labels: {
-          color: 'white', // Change legend text color
-        },
+        labels: { color: 'white' }
       },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.dataset.label}: ${context.raw} ft`
+        }
+      }
     },
   };
 
   return (
-    <Card>
+    <Card className="bg-dark text-white">
       <Card.Body className="MovementBody">
-        <Card.Title className="Movement-title">Ability Scores Bar Chart</Card.Title>
-        <div className="Movement-container">
-          <Bar data={data} options={options} />
+        <Card.Title className="Movement-title">Speed & Senses</Card.Title>
+        
+        <div className="Movement-container" style={{ height: '800px' }}>
+          {movementData.length > 0 ? (
+            <Bar data={data} options={options} />
+          ) : (
+            <p>Loading movement data...</p>
+          )}
+        </div>
+
+        <div className="Movement-data mt-3">
+          {labels.map((label, index) => (
+            <p key={label} className="mb-1">
+              <strong>{label}:</strong> {movementData[index] || 0} ft
+            </p>
+          ))}
         </div>
       </Card.Body>
     </Card>

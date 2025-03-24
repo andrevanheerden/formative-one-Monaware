@@ -26,13 +26,10 @@ const InfoCard = ({ selectedMonster }) => {
     }
   };
 
-  const getMonsterImage = (monsterName) => {
-    const monsterImages = {
-      "Adult Black Dragon": "https://example.com/images/adult-black-dragon.jpg",
-      "Goblin": "https://example.com/images/goblin.jpg",
-    };
-
-    return monsterImages[monsterName] || "https://via.placeholder.com/340?text=No+Image";
+  const getMonsterImage = (monster) => {
+    // Try to construct a plausible image URL based on the monster's index
+    const monsterIndex = monster.index || monster.name.toLowerCase().replace(/\s+/g, '-');
+    return `https://www.dnd5eapi.co/api/2014/images/monsters/${monsterIndex}.png`;
   };
 
   if (loading) return <p>Loading monster...</p>;
@@ -48,7 +45,7 @@ const InfoCard = ({ selectedMonster }) => {
         {/* Monster Image */}
         <Card.Img
           variant="top"
-          src={getMonsterImage(monster.name)}
+          src={getMonsterImage(monster)}
           alt={monster.name}
           className="InfoCardImg"
         />
