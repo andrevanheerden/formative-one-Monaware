@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
 import "../App.css";
 
-const InfoCard = () => {
+const InfoCard = ({ selectedMonster }) => {
   const [monster, setMonster] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    fetchMonster("adult-black-dragon"); // Initial call for a default monster
-  }, []);
+    fetchMonster(selectedMonster); // Fetch the selected monster
+  }, [selectedMonster]);
 
   const fetchMonster = async (monsterIndex) => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setMonster(response.data);
@@ -30,33 +26,13 @@ const InfoCard = () => {
     }
   };
 
-  const handleSearch = async (e) => {
-    setSearchTerm(e.target.value);
-    if (e.target.value.length < 3) {
-      setSearchResults([]);
-      return;
-    }
-
-    try {
-      const response = await axios.get("https://www.dnd5eapi.co/api/monsters");
-      const filteredResults = response.data.results.filter((monster) =>
-        monster.name.toLowerCase().includes(e.target.value.toLowerCase())
-      );
-      setSearchResults(filteredResults);
-    } catch (err) {
-      console.error("Error fetching search results:", err);
-    }
-  };
-
   const getMonsterImage = (monsterName) => {
-    // Map monster names to image URLs (use your own image URLs or sources here)
     const monsterImages = {
-      "Adult Black Dragon": "https://example.com/images/adult-black-dragon.jpg", // Replace with real image URL
-      "Goblin": "https://example.com/images/goblin.jpg", // Replace with real image URL
-      // Add other monsters and their image URLs here
+      "Adult Black Dragon": "https://example.com/images/adult-black-dragon.jpg",
+      "Goblin": "https://example.com/images/goblin.jpg",
     };
 
-    return monsterImages[monsterName] || "https://via.placeholder.com/340?text=No+Image"; // Fallback to placeholder
+    return monsterImages[monsterName] || "https://via.placeholder.com/340?text=No+Image";
   };
 
   if (loading) return <p>Loading monster...</p>;
@@ -66,47 +42,13 @@ const InfoCard = () => {
   return (
     <Card className="info-card">
       <Card.Body className="InfoCardBody">
-        {/* Search Bar */}
-        <Form.Control
-          type="text"
-          placeholder="Search for a monster..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="monster-search"
-        />
-
-        {/* Display search results */}
-        {searchResults.length > 0 && (
-          <div className="search-results">
-            {searchResults.map((result) => (
-              <p
-                key={result.index}
-                style={{
-                  cursor: "pointer",
-                  padding: "5px",
-                  margin: "2px",
-                  background: "#eee",
-                  borderRadius: "5px",
-                }}
-                onClick={() => {
-                  fetchMonster(result.index); // Fetch selected monster
-                  setSearchTerm("");
-                  setSearchResults([]); // Hide results after selection
-                }}
-              >
-                {result.name}
-              </p>
-            ))}
-          </div>
-        )}
-
         {/* Monster Name */}
         <Card.Title className="InfoCardTitle">{monster.name}</Card.Title>
 
         {/* Monster Image */}
         <Card.Img
           variant="top"
-          src={getMonsterImage(monster.name)} // Fetch image from the mapping or fallback to placeholder
+          src={getMonsterImage(monster.name)}
           alt={monster.name}
           className="InfoCardImg"
         />

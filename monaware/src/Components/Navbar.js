@@ -1,16 +1,38 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Card from "react-bootstrap/Card"; // Import Card component
-import "../App.css"; // Corrected import path
-import logo from "../Assets/images/logo.png"; // Import the logo image
+import Card from "react-bootstrap/Card";
+import "../App.css";
+import logo from "../Assets/images/logo.png";
 
-function Navbar() {
+function Navbar({ onMonsterSelect }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // Handle the search logic here
-    console.log("Searching for:", searchQuery);
+  const handleSearchChange = async (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.length < 3) {
+      setSearchResults([]); // Clear results if query is too short
+      return;
+    }
+
+    try {
+      const response = await fetch("https://www.dnd5eapi.co/api/monsters");
+      const data = await response.json();
+      const filteredResults = data.results.filter((monster) =>
+        monster.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filteredResults);
+    } catch (err) {
+      console.error("Error fetching monsters:", err);
+    }
+  };
+
+  const handleMonsterSelect = (monsterIndex) => {
+    onMonsterSelect(monsterIndex); // Notify parent with the selected monster index
+    setSearchQuery(""); // Clear the search input
+    setSearchResults([]); // Clear the search results
   };
 
   return (
@@ -25,14 +47,28 @@ function Navbar() {
       {/* Navbar Container */}
       <div className="navbar-container">
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="search-form">
+        <form className="search-form">
           <input
             type="text"
             placeholder="Search"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
             className="search-input"
           />
+          {/* Dropdown for search results */}
+          {searchResults.length > 0 && (
+            <div className="search-results">
+              {searchResults.map((result) => (
+                <div
+                  key={result.index}
+                  className="search-result-item"
+                  onClick={() => handleMonsterSelect(result.index)}
+                >
+                  {result.name}
+                </div>
+              ))}
+            </div>
+          )}
         </form>
 
         {/* Navigation Links */}

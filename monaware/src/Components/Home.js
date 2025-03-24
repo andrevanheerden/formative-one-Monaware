@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import InfoCard from "./InfoCard";
 import AbilityScore from "./AbilityScore";
 import SavingThrows from "./SavingThrows";
@@ -7,33 +7,33 @@ import AttacksCard from "./AttacksCard";
 import SkillsCard from "./Skills";
 import "../App.css";
 
-function Home() {
+function Home({ selectedMonster }) {
   return (
     <div className="Home">
       {/* Main Card */}
       <div className="main-card">
         <div className="Info-card">
-          <InfoCard />
+          <InfoCard selectedMonster={selectedMonster} />
         </div>
 
         <div className="Ability-score">
-          <AbilityScore />
+          <AbilityScore monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
 
         <div className="Saving-throws">
-          <SavingThrows />
+          <SavingThrows monsterIndex={selectedMonster} />
         </div>
 
         <div className="MovementVision">
-          <Movement />
+          <Movement monsterIndex={selectedMonster} />
         </div>
 
         <div className="Attacks">
-          <AttacksCard />
+          <AttacksCard monsterIndex={selectedMonster} />
         </div>
 
         <div className="Skills">
-          <SkillsCard />
+          <SkillsCard monsterIndex={selectedMonster} />
         </div>
       </div>
     </div>

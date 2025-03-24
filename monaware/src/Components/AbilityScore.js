@@ -1,72 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { Chart as ChartJS, LineElement, PointElement, Tooltip, Legend, RadialLinearScale } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import axios from 'axios';
 import '../App.css';
-
-// Static data//
-const AdultBlackDragonAbilityScore = [23, 14, 21, 14, 13, 17];
 
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
-const AbilityScore = () => {
-  // Static data
+const AbilityScore = ({ monsterIndex }) => {
+  const [abilityScores, setAbilityScores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    console.log("Received monsterIndex in AbilityScore:", monsterIndex); // Debugging log
+    const fetchAbilityScores = async () => {
+      if (!monsterIndex) {
+        setError("Monster index is required to fetch ability scores.");
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
+        const monsterData = response.data;
+        setAbilityScores([
+          monsterData.strength,
+          monsterData.dexterity,
+          monsterData.constitution,
+          monsterData.intelligence,
+          monsterData.wisdom,
+          monsterData.charisma,
+        ]);
+      } catch (err) {
+        console.error("Error fetching ability scores:", err);
+        setError("Failed to load ability scores.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAbilityScores();
+  }, [monsterIndex]); // React to changes in monsterIndex
+
+  if (loading) return <p>Loading ability scores...</p>;
+  if (error) return <p>{error}</p>;
+  if (!abilityScores.length) return <p>No ability score data available.</p>;
+
   const data = {
     labels: ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'],
     datasets: [
       {
         label: 'Ability Scores',
-        data: AdultBlackDragonAbilityScore, // Example ability scores
-        fill: true, // Enable fill between points
-        borderColor: 'rgba(171, 14, 11, 1)', // Border color
-        borderWidth: 2, // Border width
-        pointBackgroundColor: 'rgba(171, 14, 11, 1)', // Point fill color
-        pointBorderColor: '#333', // Point border color
-        pointHoverBackgroundColor: '#fff', // Point hover fill color
-        pointHoverBorderColor: 'rgba(171, 14, 11, 1)', // Point hover border color
-        backgroundColor: 'rgba(171, 14, 11, 0.5)', // Fill color
+        data: abilityScores,
+        fill: true,
+        borderColor: 'rgba(171, 14, 11, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(171, 14, 11, 1)',
+        pointBorderColor: '#333',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(171, 14, 11, 1)',
+        backgroundColor: 'rgba(171, 14, 11, 0.5)',
       },
     ],
   };
 
-  // Options for the radar chart
   const options = {
     scales: {
       r: {
         angleLines: {
           display: true,
-          color: 'white', 
+          color: 'white',
         },
         grid: {
-          color: 'white', 
+          color: 'white',
         },
-        suggestedMin: 0, // Minimum value for the radial axis
-        suggestedMax: 25, // Maximum value for the radial axis
+        suggestedMin: 0,
+        suggestedMax: 25,
         pointLabels: {
-          color: 'white', // Change label text color
+          color: 'white',
           font: {
-            size: 16, 
-            family: '"Chakra Petch", sans-serif', 
+            size: 16,
+            family: '"Chakra Petch", sans-serif',
           },
         },
       },
     },
-    responsive: true, // Make the chart responsive
-    maintainAspectRatio: false, // Allow the chart to stretch
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top', // Position of the legend
+        position: 'top',
         labels: {
-          color: 'white', // Change legend text color to white
+          color: 'white',
           font: {
-            size: 16, 
-            family: '"Chakra Petch", sans-serif', 
+            size: 16,
+            family: '"Chakra Petch", sans-serif',
           },
         },
       },
       tooltip: {
-        enabled: true, // Enable tooltips
+        enabled: true,
       },
     },
   };

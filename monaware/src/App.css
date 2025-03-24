@@ -184,6 +184,32 @@ body {
   margin-left: 15px;
 }
 
+/* Search Results Dropdown */
+.search-results {
+  position: absolute;
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border: 1px solid #AB0E0B; /* Red border */
+  border-radius: 10px;
+  width: 220px; /* Match the search input width */
+  max-height: 200px; /* Limit the height */
+  overflow-y: auto; /* Add scroll for overflow */
+  z-index: 1000; /* Ensure it appears above other elements */
+  margin-left: 15px;
+}
+
+.search-result-item {
+  padding: 10px;
+  color: white;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #AB0E0B; /* Highlight on hover */
+  color: white;
+}
+
 /* Navigation Links */
 .nav-links {
   display: flex;
@@ -221,9 +247,9 @@ body {
   display: flex;
   flex-wrap: wrap; /* Allow cards to wrap to the next row */
   gap: 20px; /* Space between cards */
-  justify-content: flex-start; /* Align cards to the start */
+  justify-content: center; /* Center the cards horizontally */
   padding: 20px; /* Padding around the container */
-  
+  margin-top: 20px; /* Add spacing from the top */
 }
 
 /* Individual Card */
@@ -393,12 +419,20 @@ canvas {
 
 /* Chart Container Styling */
 .Movement-container {
-  width:90%; /* Set chart container width */
-  height: 90%; /* Set chart container height */
+  width:700px; /* Set chart container width */
+  height: 800px; /* Set chart container height */
   display: flex;
   justify-content: center; /* Center the chart horizontally */
   align-items: center; /* Center the chart vertically */
 
+}
+
+/* Movement Chart Canvas */
+.Movement-container canvas {
+  width: 100% !important; /* Maintain aspect ratio */
+  height: 100% !important; /* Set a fixed height */
+  max-width: 700px; /* Optional: Limit the maximum width */
+  margin: 0 auto; /* Center the canvas horizontally */
 }
 
 /* Chart.js Bar Chart Styling */

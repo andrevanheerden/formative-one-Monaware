@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
@@ -8,12 +8,14 @@ import "@fontsource/chakra-petch/400.css"; // Specify weight
 import "@fontsource/chakra-petch/400-italic.css"; // Specify weight and style
 
 function App() {
+  const [selectedMonster, setSelectedMonster] = useState("adult-black-dragon");
+
   return (
     <Router>
       <div className="App">
-        <Navbar /> {/* Navbar is rendered once at the top level */}
+        <Navbar onMonsterSelect={setSelectedMonster} /> {/* Pass the state updater */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home selectedMonster={selectedMonster} />} />
           <Route path="/Comparison" element={<Comparison />} />
         </Routes>
       </div>
