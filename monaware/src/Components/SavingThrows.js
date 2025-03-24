@@ -28,14 +28,14 @@ const SavingThrows = ({ monsterIndex }) => {
         const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
         const monsterData = response.data;
 
-        // Initialize saving throws with default values of 0
+        // Initialize saving throws with null values
         const throws = {
-          Strength: 0,
-          Dexterity: 0,
-          Constitution: 0,
-          Intelligence: 0,
-          Wisdom: 0,
-          Charisma: 0,
+          Strength: null,
+          Dexterity: null,
+          Constitution: null,
+          Intelligence: null,
+          Wisdom: null,
+          Charisma: null,
         };
 
         // Extract saving throws from proficiencies
@@ -49,7 +49,9 @@ const SavingThrows = ({ monsterIndex }) => {
           });
         }
 
-        setSavingThrows(Object.values(throws));
+        // Replace null values with 0 only if no other value exists
+        const finalThrows = Object.entries(throws).map(([key, value]) => value ?? 0);
+        setSavingThrows(finalThrows);
       } catch (err) {
         console.error("Error fetching saving throws:", err);
         setError("Failed to load saving throws.");
