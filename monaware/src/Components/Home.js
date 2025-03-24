@@ -21,19 +21,19 @@ function Home({ selectedMonster }) {
         </div>
 
         <div className="Saving-throws">
-          <SavingThrows monsterIndex={selectedMonster} />
+          <SavingThrows monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
 
         <div className="MovementVision">
-          <Movement monsterIndex={selectedMonster} />
+          <Movement monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
 
         <div className="Attacks">
-          <AttacksCard monsterIndex={selectedMonster} />
+          <AttacksCard monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
 
         <div className="Skills">
-          <SkillsCard monsterIndex={selectedMonster} />
+          <SkillsCard monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
       </div>
     </div>
