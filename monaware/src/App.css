@@ -255,6 +255,7 @@ body {
 /* Individual Card */
 .info-card {
   width: 563px; /* Fixed width for each card */
+
   background-color: rgba(2, 5, 4, 0.95); /* Background color */
   color: white;
   border-radius: 20px;
@@ -264,6 +265,7 @@ body {
   align-items: center;
   text-align: center;
   padding: 20px; /* Padding inside the card */
+  margin-left: 30px;
 }
 
 /* Card Image */
@@ -646,7 +648,7 @@ canvas {
 
   border-radius: 10px;
   padding: 15px;
-  border: 1px solid #AB0E0B; /* Red border */
+  border: 2px solid #AB0E0B; /* Red border */
 }
 
 .charts-container {
@@ -798,4 +800,69 @@ canvas {
   text-align: center;
   font-size: 16px;
   outline: none;
+}
+
+/* Dataset container styling */
+.datasets-row {
+  display: flex;
+  flex-direction: row; /* Arrange datasets in a row */
+  justify-content: center; /* Center the datasets horizontally */
+  gap: 20px; /* Add space between datasets */
+  margin-top: 20px; /* Add spacing from the top */
+}
+
+/* Individual dataset styling */
+.dataset-1, .dataset-2 {
+  flex: 1; /* Allow datasets to take equal space */
+  max-width: 45%; /* Limit the maximum width of each dataset */
+}
+
+/* InfoComparison Search Bar */
+.info-comparison-search-bar {
+  width: 220px;
+  background-color: #020504;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 16px;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 15px;
+  border: 2px solid #AB0E0B;
+  margin-top: -10px;
+  margin-left: 210px;
+}
+
+/* Search Results Dropdown */
+.info-comparison-search-results {
+  position: absolute;
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border: 1px solid #AB0E0B; /* Red border */
+  border-radius: 10px;
+  width: 220px; /* Match the search input width */
+  max-height: 200px; /* Limit the height */
+  overflow-y: auto; /* Add scroll for overflow */
+  z-index: 1000; /* Ensure it appears above other elements */
+  margin-left: 210px;
+}
+
+.info-comparison-search-result-item {
+  padding: 10px;
+  color: white;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.info-comparison-search-result-item:hover {
+  background-color: #AB0E0B; /* Highlight on hover */
+  color: white;
+}
+
+/* Dataset 2 Search Bar */
+.dataset-2 .info-comparison-search-bar {
+  border: 2px solid rgb(0, 162, 255); /* Blue border for dataset 2 search bar */
+}
+
+/* Dataset 2 Card Outline */
+.dataset-2 .info-card {
+  border: 2px solid rgb(0, 162, 255); /* Blue border for dataset 2 cards */
 }
