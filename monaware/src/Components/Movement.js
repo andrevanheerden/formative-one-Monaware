@@ -1,33 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
-import { Bar } from 'react-chartjs-2'; // Correct import with uppercase 'Bar'
+import { Bar } from 'react-chartjs-2';
 import '../App.css';
 
 // Register Chart.js components
 ChartJS.register(
-  BarElement, // Register the BarElement
-  CategoryScale, // Required for the x-axis
-  LinearScale, // Required for the y-axis
-  Tooltip, // For tooltips
-  Legend // For the legend
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
 );
 
-// Static data
-const AdultBlackDragonMovement = [40, 80, 40, 60, 120];
+const Movement = ({ monsterIndex }) => {
+  const [movementData, setMovementData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const Movement = () => {
+  useEffect(() => {
+    const fetchMovementData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
+        const monsterData = response.data;
+
+        // Extract movement and vision data
+        const movement = [
+          monsterData.speed.walk ? parseInt(monsterData.speed.walk) : 0,
+          monsterData.speed.fly ? parseInt(monsterData.speed.fly) : 0,
+          monsterData.speed.swim ? parseInt(monsterData.speed.swim) : 0,
+          monsterData.senses.blindsight ? parseInt(monsterData.senses.blindsight) : 0,
+          monsterData.senses.darkvision ? parseInt(monsterData.senses.darkvision) : 0,
+        ];
+
+        setMovementData(movement);
+      } catch (err) {
+        console.error("Error fetching movement data:", err);
+        setError("Failed to load movement data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (monsterIndex) fetchMovementData();
+  }, [monsterIndex]);
+
+  if (loading) return <p>Loading movement data...</p>;
+  if (error) return <p>{error}</p>;
+  if (!movementData.length) return <p>No movement data available.</p>;
+
   // Chart data
   const data = {
     labels: ['SpeedWalking', 'SpeedFlying', 'SpeedSwimming', 'Blindsight', 'Darkvision'],
     datasets: [
       {
         label: 'Movement And Vision',
-        data: AdultBlackDragonMovement, // Example ability scores
-        borderColor: 'rgba(171, 14, 11, 1)', // Border color
-        borderWidth: 2, // Border width
-        backgroundColor: 'rgba(171, 14, 11, 0.5)', // Fill color
-        color: 'white', // Change label text color
+        data: movementData,
+        borderColor: 'rgba(171, 14, 11, 1)',
+        borderWidth: 2,
+        backgroundColor: 'rgba(171, 14, 11, 0.5)',
+        color: 'white',
       },
     ],
   };
@@ -38,27 +73,27 @@ const Movement = () => {
       y: {
         ticks: {
           callback: function (value) {
-            return value + ' ft'; // Append 'ft' to the y-axis ticks
+            return value + ' ft';
           },
-          color: 'white', // Change tick text color
+          color: 'white',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
+          color: 'rgba(255, 255, 255, 0.3)',
         },
       },
       x: {
         ticks: {
-          color: 'white', // Change tick text color
+          color: 'white',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.3)', // Change grid line color
+          color: 'rgba(255, 255, 255, 0.3)',
         },
       },
     },
     plugins: {
       legend: {
         labels: {
-          color: 'white', // Change legend text color
+          color: 'white',
         },
       },
     },
