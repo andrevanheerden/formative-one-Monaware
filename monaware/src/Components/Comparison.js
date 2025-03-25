@@ -4,6 +4,7 @@ import InfoComparison from "./InfoComparison";
 import AbilityComparison from "./AbilityComparison";
 import MovementComparison from "./MovementComparison";
 import SkillsComparison from "./SkillsComparison";
+import SavingThrowComparison from "./SavingThrowComparison";
 import { useState } from 'react';
 
 function Comparison() {
@@ -24,6 +25,10 @@ function Comparison() {
 
         <div className="Ability-Comparison">
           <AbilityComparison dataset1={dataset1} dataset2={dataset2} />
+        </div>
+
+        <div className="SavingThrow-Comparison">
+          <SavingThrowComparison dataset1={dataset1} dataset2={dataset2} />
         </div>
 
         <div className="movement-comp">
