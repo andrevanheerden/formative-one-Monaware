@@ -31,7 +31,7 @@ const InfoCard = ({ selectedMonster }) => {
     const imageEntry = monsterImages.sample.find(
       (entry) => entry.description === monsterIndex
     );
-    return imageEntry ? imageEntry.imageUrl : "https://via.placeholder.com/340";
+    return imageEntry?.imageUrl || "https://via.placeholder.com/340";
   };
 
   if (loading) return <p>Loading monster...</p>;

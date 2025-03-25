@@ -97,7 +97,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
     const imageEntry = monsterImages.sample.find(
       (entry) => entry.description === monsterIndex
     );
-    return imageEntry ? imageEntry.imageUrl : "https://via.placeholder.com/340";
+    return imageEntry?.imageUrl || "https://via.placeholder.com/340";
   };
 
   const displayCard = (card, index) => {
