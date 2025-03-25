@@ -4,7 +4,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 import monsterImages from "../Assets/images/monsterImages"; // Import monster images
 import "../App.css";
 
-const InfoComparison = () => {
+const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [cardDetails1, setCardDetails1] = useState([]);
   const [cardDetails2, setCardDetails2] = useState([]);
   const [searchQuery1, setSearchQuery1] = useState("");
@@ -31,6 +31,7 @@ const InfoComparison = () => {
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails1([response.data]);
+      onDataset1Change(monsterIndex); // Notify parent component
     } catch (err) {
       console.error("Error fetching dataset 1:", err);
       setError1("Monster not found. Please try again.");
@@ -49,6 +50,7 @@ const InfoComparison = () => {
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails2([response.data]);
+      onDataset2Change(monsterIndex); // Notify parent component
     } catch (err) {
       console.error("Error fetching dataset 2:", err);
       setError2("Monster not found. Please try again.");
