@@ -21,17 +21,31 @@ Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/
 ### How to run Monaware
 
 #### Step 1:
-```
+
 Clone the repo:
 ```
 https://github.com/andrevanheerden/formative-one-Monaware.git
 ```
 
 #### Step 2:
-```
+
 Install dependencies using terminal:
 ```
 npm install
+```
+
+#### Step 3:
+
+open monaware file in terminal:
+```
+cd monaware
+```
+
+#### Step 4:
+
+Run monaware:
+```
+npm start
 ```
 
 ### `npm test`
