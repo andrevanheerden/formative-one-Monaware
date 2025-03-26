@@ -1005,7 +1005,7 @@ canvas {
   width: 1450px; /* Full width of the card */
   height: auto; /* Fixed height to fit within the card */
   margin: auto; /* Center the container */
-
+  text-align: center; /* For inline elements */
 
 }
 
@@ -1020,7 +1020,15 @@ canvas {
 }
 
 
-
+.clear-data-button{
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border: 1px solid #AB0E0B; /* Red border */
+  border-radius: 10px;
+  color: #fff;
+  width: 220px; /* Match the search input width */
+  max-height: 200px; /* Limit the height */
+  align-items: center;
+}
 
 
 

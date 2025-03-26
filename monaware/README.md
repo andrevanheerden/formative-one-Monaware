@@ -7,7 +7,7 @@
 Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/docs/). D&D 5e SRD API is a api that has all data on D&D such as skills ,equipment, ect. Monaware uses all data from the monsters database. the images i got from a fill posted on the discord of D&D 5e SRD API because the API does not have 70% of the monsters images.
 
 
-### This Website was Build with
+### Monaware is Build with
 
 [![Javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://www.javascript.com/)
 [![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en)
@@ -15,13 +15,13 @@ Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/
 [![ChartJS](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
-### `npm start`
+### How to run Monaware
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Step 1:
+'''
+Clone the repo:
+'''
+https://github.com/andrevanheerden/formative-one-Monaware.git
 
 ### `npm test`
 
