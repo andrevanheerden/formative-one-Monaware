@@ -1,4 +1,4 @@
-![monaware headder img](../monaware/src/Assets/images/logo.png)
+![monaware headder img](https://github.com/andrevanheerden/formative-one-Monaware/blob/main/monaware/src/Assets/images/logo.png)
 
 - - - -
 
@@ -61,3 +61,8 @@ npm start
 | skill cart | skill comparison cart |  |
 | attack carts | |  |
 
+## what is the use of monaware
+
+Monaware was created for DM to have a quick way to look and compare monster data such as ability scores, saving throws, base info etc.
+
+## Wireframes

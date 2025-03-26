@@ -27,7 +27,7 @@ const MonsterList = () => {
 
   return (
     <div>
-      <h2>Monster List</h2>
+
       <ul>
         {monsters.map((monster) => (
           <li key={monster.index}>{monster.name}</li>

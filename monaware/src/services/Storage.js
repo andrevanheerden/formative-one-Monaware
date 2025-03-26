@@ -1,4 +1,4 @@
-// src/services/storage.js
+
 export const loadData = (key, defaultValue = []) => {
     try {
       const serializedData = localStorage.getItem(key);
