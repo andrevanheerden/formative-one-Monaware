@@ -81,4 +81,14 @@ my first challenge was with the images provided by the Api as 70% of the images 
 
 my second challenge was with the timeline bar chart with storing data so i had to set up a storage.js file to put this data in a locale json storage.
 
+## Mockups
+
+![Mockups](https://github.com/andrevanheerden/formative-one-Monaware/blob/main/monaware/src/Assets/images/Wireframes/mockup.png)
+
 ## Demo Vidio
+
+[Link to the Demo Vidio](https://drive.google.com/file/d/1IYq-TGkVZ1KIcWjcZCgO6fOWaFrIwBxk/view?usp=sharing)
+
+## Creaters
+
+[Andre van Heerden](https://github.com/andrevanheerden)
