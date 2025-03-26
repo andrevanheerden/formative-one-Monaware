@@ -7,9 +7,13 @@
 Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/docs/). D&D 5e SRD API is a api that has all data on D&D such as skills ,equipment, ect. Monaware uses all data from the monsters database. the images i got from a fill posted on the discord of D&D 5e SRD API because the API does not have 70% of the monsters images.
 
 
-## Available Scripts
+### This Website was Build with
 
-In the project directory, you can run:
+[![Javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://www.javascript.com/)
+[![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![ChartJS](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
 ### `npm start`
 
