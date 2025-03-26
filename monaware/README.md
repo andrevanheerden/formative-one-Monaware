@@ -1,8 +1,11 @@
 ![monaware headder img](../monaware/src/Assets/images/logo.png)
 
-# About monaware
+- - - -
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About Monaware
+
+Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/docs/). D&D 5e SRD API is a api that has all data on D&D such as skills ,equipment, ect. Monaware uses all data from the monsters database. the images i got from a fill posted on the discord of D&D 5e SRD API because the API does not have 70% of the monsters images.
+
 
 ## Available Scripts
 
