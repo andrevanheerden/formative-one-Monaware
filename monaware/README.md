@@ -30,6 +30,7 @@ https://github.com/andrevanheerden/formative-one-Monaware.git
 #### Step 2:
 
 Install dependencies using terminal:
+
 ```
 npm install
 ```
@@ -37,6 +38,7 @@ npm install
 #### Step 3:
 
 open monaware file in terminal:
+
 ```
 cd monaware
 ```
@@ -44,6 +46,7 @@ cd monaware
 #### Step 4:
 
 Run monaware:
+
 ```
 npm start
 ```
