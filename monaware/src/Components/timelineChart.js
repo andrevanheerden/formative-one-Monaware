@@ -1,9 +1,10 @@
-// timelineChart.js (updated single chart version)
+// src/components/TimelineChart.js
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
+import { loadData, saveData, clearData } from "../services/Storage";
 import "../App.css";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -13,15 +14,22 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Load saved data from localStorage when component mounts
+  // Load saved data when component mounts
   useEffect(() => {
-    const savedData = localStorage.getItem('savedMonstersData');
-    if (savedData) {
-      setAllMonstersData(JSON.parse(savedData));
+    const savedData = loadData('savedMonstersData');
+    if (savedData && savedData.length > 0) {
+      setAllMonstersData(savedData);
     }
   }, []);
 
-  // Fetch new data and update localStorage
+  // Save data whenever it changes
+  useEffect(() => {
+    if (allMonstersData.length > 0) {
+      saveData('savedMonstersData', allMonstersData);
+    }
+  }, [allMonstersData]);
+
+  // Fetch new data when selected monsters change
   useEffect(() => {
     if (selectedMonsters.length > 0) {
       fetchMonstersData(selectedMonsters);
@@ -31,10 +39,13 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
   const fetchMonstersData = async (monsterIndices) => {
     setLoading(true);
     setError(null);
+    
     try {
-      // Filter out monsters we already have data for
+      const currentData = loadData('savedMonstersData', []);
+      
+      // Filter out monsters we already have
       const newIndices = monsterIndices.filter(index => 
-        !allMonstersData.some(monster => monster.index === index)
+        !currentData.some(monster => monster.index === index)
       );
 
       if (newIndices.length === 0) {
@@ -48,11 +59,11 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
       const responses = await Promise.all(promises);
       const newMonsters = responses.map(res => res.data);
       
-      // Merge new monsters with existing data
-      const updatedData = [...allMonstersData, ...newMonsters];
+      // Merge new with existing data
+      const updatedData = [...currentData, ...newMonsters];
       
       setAllMonstersData(updatedData);
-      localStorage.setItem('savedMonstersData', JSON.stringify(updatedData));
+      saveData('savedMonstersData', updatedData);
     } catch (err) {
       console.error("Error fetching monsters data:", err);
       setError("Failed to load monsters data.");
@@ -61,7 +72,14 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
     }
   };
 
-  // Prepare chart data combining all monsters
+  const handleClearData = () => {
+    if (window.confirm("Are you sure you want to clear all saved monster data?")) {
+      setAllMonstersData([]);
+      clearData('savedMonstersData');
+    }
+  };
+
+  // Chart data preparation
   const chartData = {
     labels: allMonstersData.map(monster => monster.name),
     datasets: [
@@ -94,7 +112,7 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
       title: {
         display: true,
         text: allMonstersData.length > 0 
-          ? "Monster XP Comparison (All Data)" 
+          ? `Monster XP Comparison (${allMonstersData.length} saved)` 
           : "Monster XP Comparison",
         color: "#fff",
         font: {
@@ -121,7 +139,6 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
         },
         ticks: {
           color: "#fff",
-          // Auto-rotate labels if there are many monsters
           maxRotation: 45,
           minRotation: 45
         },
@@ -159,7 +176,16 @@ const MonsterXPChart = ({ selectedMonsters = [] }) => {
       <Card.Body className="TimeBody">
         <div className="TimeChart-container">
           {allMonstersData.length > 0 ? (
-            <Line data={chartData} options={chartOptions} />
+            <>
+              <Line data={chartData} options={chartOptions} />
+              <button 
+                onClick={handleClearData}
+                className="clear-data-button"
+                title="Clear all saved monster data"
+              >
+                Clear Saved Data
+              </button>
+            </>
           ) : (
             <p>No monster data available. Select monsters to begin.</p>
           )}
