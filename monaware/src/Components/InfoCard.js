@@ -3,9 +3,7 @@ import axios from "axios";
 import Card from "react-bootstrap/Card";
 import monsterImages from "../Assets/images/monsterImages";
 import "../App.css";
-
-// Default image when no match is found
-const DEFAULT_MONSTER_IMAGE = "https://www.dndbeyond.com/avatars/thumbnails/0/1/1000/1000/636252756157427258.jpeg";
+import noIMG from "../Assets/images/noIMG.png";
 
 const InfoCard = ({ selectedMonster }) => {
   const [monster, setMonster] = useState(null);
@@ -61,7 +59,7 @@ const InfoCard = ({ selectedMonster }) => {
   };
 
   const getMonsterImage = (monsterIndex) => {
-    if (!monsterIndex) return DEFAULT_MONSTER_IMAGE;
+    if (!monsterIndex) return noIMG;
     
     // Clean up the monster index for matching
     const cleanIndex = monsterIndex.toLowerCase().replace(/-/g, ' ').trim();
@@ -77,8 +75,8 @@ const InfoCard = ({ selectedMonster }) => {
       );
     });
 
-    // Return the first match if found, otherwise default image
-    return matches.length > 0 ? matches[0].imageUrl : DEFAULT_MONSTER_IMAGE;
+    // Return the first match if found, otherwise use noIMG
+    return matches.length > 0 ? matches[0].imageUrl : noIMG;
   };
 
   if (loading) return <div className="loading-placeholder">Loading monster data...</div>;
@@ -98,7 +96,7 @@ const InfoCard = ({ selectedMonster }) => {
           )}
           <Card.Img
             variant="top"
-            src={imageError ? DEFAULT_MONSTER_IMAGE : imageUrl}
+            src={imageError ? noIMG : imageUrl}
             alt={monster.name}
             className={`InfoCardImg ${imageLoading ? 'hidden' : 'fade-in'}`}
             onLoad={() => setImageLoading(false)}

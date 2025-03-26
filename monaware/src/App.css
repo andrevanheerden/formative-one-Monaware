@@ -207,7 +207,7 @@ body {
   border: 1px solid #AB0E0B; /* Red border */
   border-radius: 10px;
   width: 220px; /* Match the search input width */
-  max-height: 200px; /* Limit the height */
+  max-height: 400px; /* Limit the height */
   overflow-y: auto; /* Add scroll for overflow */
   z-index: 1000; /* Ensure it appears above other elements */
   margin-left: 15px;

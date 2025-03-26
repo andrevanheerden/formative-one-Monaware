@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Row, Col, Form } from 'react-bootstrap';
 import monsterImages from "../Assets/images/monsterImages";
+import noIMG from "../Assets/images/noIMG.png";
 import "../App.css";
-
-// Default image when no match is found
-const DEFAULT_MONSTER_IMAGE = "https://www.dndbeyond.com/avatars/thumbnails/0/1/1000/1000/636252756157427258.jpeg";
 
 const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [cardDetails1, setCardDetails1] = useState([]);
@@ -18,6 +16,8 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [loading2, setLoading2] = useState(true);
   const [error1, setError1] = useState(null);
   const [error2, setError2] = useState(null);
+  const [imageUrl1, setImageUrl1] = useState("");
+  const [imageUrl2, setImageUrl2] = useState("");
   const [imageLoading1, setImageLoading1] = useState(true);
   const [imageLoading2, setImageLoading2] = useState(true);
   const [imageError1, setImageError1] = useState(false);
@@ -28,22 +28,47 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
     fetchDataset2("ancient-blue-dragon");
   }, []);
 
+  const getMonsterImage = (monsterIndex) => {
+    if (!monsterIndex) return noIMG;
+    
+    // Clean up the monster index for matching
+    const cleanIndex = monsterIndex.toLowerCase().replace(/-/g, ' ').trim();
+    
+    // Try different matching strategies
+    const matches = monsterImages.sample.filter(entry => {
+      const cleanDescription = entry.description.toLowerCase().replace(/-/g, ' ').trim();
+      return (
+        cleanDescription === cleanIndex || // exact match
+        cleanDescription.includes(cleanIndex) || // description contains our index
+        cleanIndex.includes(cleanDescription) || // our index contains description
+        cleanDescription.replace(/\s+/g, '') === cleanIndex.replace(/\s+/g, '') // same letters without spaces
+      );
+    });
+
+    // Return the first match if found, otherwise use noIMG
+    return matches.length > 0 ? matches[0].imageUrl : noIMG;
+  };
+
   const fetchDataset1 = async (monsterIndex) => {
     if (!monsterIndex) {
       setError1("Please enter a valid monster name.");
       return;
     }
     setLoading1(true);
-    setImageLoading1(true);
     setError1(null);
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails1([response.data]);
       onDataset1Change(monsterIndex);
       
-      // Preload the image
+      // Set and preload the image
+      const url = getMonsterImage(monsterIndex);
+      setImageUrl1(url);
+      setImageLoading1(true);
+      setImageError1(false);
+      
       const img = new Image();
-      img.src = getMonsterImage(monsterIndex);
+      img.src = url;
       img.onload = () => setImageLoading1(false);
       img.onerror = () => {
         console.warn(`Failed to preload image for monster: ${response.data.name}`);
@@ -64,16 +89,20 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
       return;
     }
     setLoading2(true);
-    setImageLoading2(true);
     setError2(null);
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails2([response.data]);
       onDataset2Change(monsterIndex);
       
-      // Preload the image
+      // Set and preload the image
+      const url = getMonsterImage(monsterIndex);
+      setImageUrl2(url);
+      setImageLoading2(true);
+      setImageError2(false);
+      
       const img = new Image();
-      img.src = getMonsterImage(monsterIndex);
+      img.src = url;
       img.onload = () => setImageLoading2(false);
       img.onerror = () => {
         console.warn(`Failed to preload image for monster: ${response.data.name}`);
@@ -122,31 +151,10 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
     }
   };
 
-  const getMonsterImage = (monsterIndex) => {
-    if (!monsterIndex) return DEFAULT_MONSTER_IMAGE;
-    
-    // Clean up the monster index for matching
-    const cleanIndex = monsterIndex.toLowerCase().replace(/-/g, ' ').trim();
-    
-    // Try different matching strategies
-    const matches = monsterImages.sample.filter(entry => {
-      const cleanDescription = entry.description.toLowerCase().replace(/-/g, ' ').trim();
-      return (
-        cleanDescription === cleanIndex || // exact match
-        cleanDescription.includes(cleanIndex) || // description contains our index
-        cleanIndex.includes(cleanDescription) || // our index contains description
-        cleanDescription.replace(/\s+/g, '') === cleanIndex.replace(/\s+/g, '') // same letters without spaces
-      );
-    });
-
-    // Return the first match if found, otherwise default image
-    return matches.length > 0 ? matches[0].imageUrl : DEFAULT_MONSTER_IMAGE;
-  };
-
   const displayCard = (card, index, isFirstCard) => {
-    const imageUrl = getMonsterImage(card.index);
     const isLoading = isFirstCard ? imageLoading1 : imageLoading2;
     const isError = isFirstCard ? imageError1 : imageError2;
+    const imageUrl = isFirstCard ? imageUrl1 : imageUrl2;
 
     return (
       <Col key={index} md={12} className="mb-4">
@@ -160,7 +168,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
                 </div>
               )}
               <img
-                src={isError ? DEFAULT_MONSTER_IMAGE : imageUrl}
+                src={isError ? noIMG : imageUrl}
                 alt={card.name}
                 className={`InfoCardImg ${isLoading ? 'hidden' : 'fade-in'}`}
                 onLoad={() => isFirstCard ? setImageLoading1(false) : setImageLoading2(false)}
