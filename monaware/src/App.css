@@ -72,7 +72,7 @@ body {
 
 .Timeline-card {
   width: 1500px; /* Fixed width for the main card */
-  height: 3509px; /* Fixed height for the main card */
+  height: 1800px; /* Fixed height for the main card */
   background-color: rgba(2, 5, 4, 0.95); /* Dark background */
   border-radius: 20px;
   border: 2px solid #AB0E0B; /* Red border */
@@ -83,6 +83,7 @@ body {
   gap: 20px; /* Space between grid items */
   margin-left: 350px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 
@@ -783,7 +784,7 @@ canvas {
 
 /* Card styling */
 .MovementComparisonBody {
-  background-color: (2, 5, 4, 0.95); /* Dark background for the card */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background for the card */
   color: white; /* Text color */
   padding: 20px; /* Add some padding inside the card */
   border-radius: 10px; /* Rounded corners for the card */
@@ -817,92 +818,89 @@ canvas {
 
 
 
-/*Skill comparison*/
+/* Skills Comparison Component */
 
-
-/* App.css or a separate CSS file */
-
-/* Container for the entire component */
 .SkillsComparison-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  justify-content: center; /* Center horizontally */
   padding: 20px;
-  margin-right: 45%;
 }
 
-/* Card styling */
 .SkillsComparisonBody {
-  background-color: rgba(0, 0, 0, 0.95); /* Dark background for the card */
-  color: white; /* Text color */
-  padding: 20px; /* Add some padding inside the card */
+  background-color: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 20px;
   border-radius: 20px;
-  border: 2px solid #AB0E0B; /* Red border */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  border: 2px solid #AB0E0B;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 1400px;
-  text-align: center; /* Center-align the title */
+  text-align: center;
 }
 
-/* Title styling */
 .SkillsComparisonTitle {
-  font-size: 24px; /* Larger font size for the title */
-  font-weight: bold; /* Bold text */
-  margin-bottom: 20px; /* Space below the title */
-  text-align: center; /* Center-align the title */
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #AB0E0B;
 }
 
-/* Grid layout for the columns */
 .SkillsComparison-grid {
   display: flex;
-  gap: 20px; /* Space between the columns */
+  gap: 40px;
+  justify-content: space-between;
 }
 
-/* Column styling */
 .SkillsComparison-column {
   flex: 1;
+  text-align: left;
 }
 
-/* Category heading styling */
+.monster-title {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #AB0E0B;
+}
+
 .SkillsComparison-category h4 {
   font-size: 18px;
-  margin-bottom: 10px;
-  color: #AB0E0B; /* Yellow color for headings */
+  margin: 15px 0 10px;
+  color: #AB0E0B;
 }
 
-/* Skill item styling */
 .SkillsComparison-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  justify-content: space-between;
 }
 
 .SkillsComparison-item label {
   flex: 1;
   font-size: 14px;
+  color: white;
 }
 
-/* Hexagon styling */
 .SkillsComparisonHexagon {
-  width: 60px;
-  height: 60px;
-  background-color: #3498db; /* Default hexagon color */
+  width: 50px;
+  height: 50px;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 10px;
 }
 
-/* Different hexagon colors for the two datasets */
 .hexagon-color-1 {
-  background-color: rgba(171, 14, 11, 1); /* Blue for Character 1 */
+  background-color: rgba(171, 14, 11, 0.7);
 }
 
 .hexagon-color-2 {
-  background-color: rgb(0, 162, 255); /* Red for Character 2 */
+  background-color: rgba(0, 162, 255, 0.7);
 }
 
-/* Input styling inside hexagons */
 .SkillsComparisonHexagon input {
   width: 80%;
   background: transparent;
@@ -912,6 +910,7 @@ canvas {
   font-size: 16px;
   outline: none;
 }
+
 
 /* Dataset container styling */
 .datasets-row {
@@ -982,3 +981,51 @@ canvas {
   color: white;
   font-size: 24px;
 }
+
+
+
+/*time*/
+
+
+.TimeBody {
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background for the card */
+  color: white; /* Text color */
+  padding: 20px; /* Add some padding inside the card */
+  border-radius: 10px; /* Rounded corners for the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.95); /* Add a subtle shadow */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+}
+
+
+/* Chart container styling */
+.TimeChart-container {
+  width: 1450px; /* Full width of the card */
+  height: auto; /* Fixed height to fit within the card */
+  margin: auto; /* Center the container */
+
+
+}
+
+/* Chart.js canvas styling */
+.canves {
+  width: 100% !important; /* Ensure the chart fills the container */
+  height: 100% !important; /* Ensure the chart fills the container */
+}
+
+.Ability-score{
+  margin-left: -800px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

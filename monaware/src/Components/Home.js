@@ -16,7 +16,7 @@ function Home({ selectedMonster }) {
           <InfoCard selectedMonster={selectedMonster} />
         </div>
 
-        <div className="Ability-score">
+        <div className="AbilityScore">
           <AbilityScore monsterIndex={selectedMonster} /> {/* Pass selectedMonster */}
         </div>
 

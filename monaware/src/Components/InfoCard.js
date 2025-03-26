@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
-import monsterImages from "../Assets/images/monsterImages"; // Import monster images
+import monsterImages from "../Assets/images/monsterImages";
 import "../App.css";
 
 const InfoCard = ({ selectedMonster }) => {
   const [monster, setMonster] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    fetchMonster(selectedMonster); // Fetch the selected monster
+    fetchMonster(selectedMonster);
   }, [selectedMonster]);
 
   const fetchMonster = async (monsterIndex) => {
@@ -28,10 +29,30 @@ const InfoCard = ({ selectedMonster }) => {
   };
 
   const getMonsterImage = (monsterIndex) => {
-    const imageEntry = monsterImages.sample.find(
-      (entry) => entry.description === monsterIndex
+    if (!monsterIndex) return "https://via.placeholder.com/340";
+    
+    // Try exact match first
+    const exactMatch = monsterImages.sample.find(
+      entry => entry.description === monsterIndex
     );
-    return imageEntry?.imageUrl || "https://via.placeholder.com/340";
+    if (exactMatch) return exactMatch.imageUrl;
+    
+    // Try replacing hyphens with spaces and lowercase
+    const formattedIndex = monsterIndex.replace(/-/g, ' ');
+    const formattedMatch = monsterImages.sample.find(
+      entry => entry.description.toLowerCase() === formattedIndex.toLowerCase()
+    );
+    if (formattedMatch) return formattedMatch.imageUrl;
+    
+    // Try partial matching
+    const partialMatch = monsterImages.sample.find(
+      entry => monsterIndex.includes(entry.description.replace(/-/g, '')) || 
+              entry.description.includes(monsterIndex.replace(/-/g, ''))
+    );
+    if (partialMatch) return partialMatch.imageUrl;
+    
+    // Default placeholder
+    return "https://via.placeholder.com/340";
   };
 
   if (loading) return <p>Loading monster...</p>;
@@ -41,18 +62,14 @@ const InfoCard = ({ selectedMonster }) => {
   return (
     <Card className="info-card">
       <Card.Body className="InfoCardBody">
-        {/* Monster Name */}
         <Card.Title className="InfoCardTitle">{monster.name}</Card.Title>
-
-        {/* Monster Image */}
         <Card.Img
           variant="top"
-          src={getMonsterImage(monster.index)}
+          src={imageError ? "https://via.placeholder.com/340" : getMonsterImage(monster.index)}
           alt={monster.name}
           className="InfoCardImg"
+          onError={() => setImageError(true)}
         />
-
-        {/* Monster Details */}
         <Card.Text className="InfoCardText">
           <p><strong>HP:</strong> {monster.hit_points || "Unknown"}</p>
           <p><strong>AC:</strong> {Array.isArray(monster.armor_class) ? monster.armor_class.map(ac => ac.value).join(", ") : monster.armor_class || "Unknown"}</p>

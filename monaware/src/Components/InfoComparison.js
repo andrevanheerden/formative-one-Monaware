@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Row, Col, Form } from 'react-bootstrap';
-import monsterImages from "../Assets/images/monsterImages"; // Import monster images
+import monsterImages from "../Assets/images/monsterImages";
 import "../App.css";
 
 const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
@@ -15,6 +15,8 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [loading2, setLoading2] = useState(true);
   const [error1, setError1] = useState(null);
   const [error2, setError2] = useState(null);
+  const [imageError1, setImageError1] = useState(false);
+  const [imageError2, setImageError2] = useState(false);
 
   useEffect(() => {
     fetchDataset1("adult-black-dragon");
@@ -31,7 +33,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails1([response.data]);
-      onDataset1Change(monsterIndex); // Notify parent component
+      onDataset1Change(monsterIndex);
     } catch (err) {
       console.error("Error fetching dataset 1:", err);
       setError1("Monster not found. Please try again.");
@@ -50,7 +52,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails2([response.data]);
-      onDataset2Change(monsterIndex); // Notify parent component
+      onDataset2Change(monsterIndex);
     } catch (err) {
       console.error("Error fetching dataset 2:", err);
       setError2("Monster not found. Please try again.");
@@ -94,22 +96,45 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   };
 
   const getMonsterImage = (monsterIndex) => {
-    const imageEntry = monsterImages.sample.find(
-      (entry) => entry.description === monsterIndex
+    if (!monsterIndex) return "https://via.placeholder.com/340";
+    
+    // Try exact match first
+    const exactMatch = monsterImages.sample.find(
+      entry => entry.description === monsterIndex
     );
-    return imageEntry?.imageUrl || "https://via.placeholder.com/340";
+    if (exactMatch) return exactMatch.imageUrl;
+    
+    // Try replacing hyphens with spaces and lowercase
+    const formattedIndex = monsterIndex.replace(/-/g, ' ');
+    const formattedMatch = monsterImages.sample.find(
+      entry => entry.description.toLowerCase() === formattedIndex.toLowerCase()
+    );
+    if (formattedMatch) return formattedMatch.imageUrl;
+    
+    // Try partial matching
+    const partialMatch = monsterImages.sample.find(
+      entry => monsterIndex.includes(entry.description.replace(/-/g, '')) || 
+              entry.description.includes(monsterIndex.replace(/-/g, ''))
+    );
+    if (partialMatch) return partialMatch.imageUrl;
+    
+    // Default placeholder
+    return "https://via.placeholder.com/340";
   };
 
-  const displayCard = (card, index) => {
+  const displayCard = (card, index, isFirstCard) => {
     return (
       <Col key={index} md={12} className="mb-4">
         <div className="info-card">
           <div className='InfoCardBody'>
             <h3 className='InfoCardTitle'>{card.name}</h3>
             <img
-              src={getMonsterImage(card.index)}
+              src={isFirstCard 
+                ? (imageError1 ? "https://via.placeholder.com/340" : getMonsterImage(card.index))
+                : (imageError2 ? "https://via.placeholder.com/340" : getMonsterImage(card.index))}
               alt={card.name}
               className="InfoCardImg"
+              onError={() => isFirstCard ? setImageError1(true) : setImageError2(true)}
             />
             <div className='InfoCardText'>
               <p>HP : {card.hit_points || "Unknown"}</p>
@@ -162,7 +187,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
         </Form>
         {loading1 ? <p>Loading...</p> : error1 ? <p className="error-message">{error1}</p> : (
           <Row className='cards-container'>
-            {cardDetails1.map((card, index) => displayCard(card, index))}
+            {cardDetails1.map((card, index) => displayCard(card, index, true))}
           </Row>
         )}
       </div>
@@ -197,7 +222,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
         </Form>
         {loading2 ? <p>Loading...</p> : error2 ? <p className="error-message">{error2}</p> : (
           <Row className='cards-container'>
-            {cardDetails2.map((card, index) => displayCard(card, index))}
+            {cardDetails2.map((card, index) => displayCard(card, index, false))}
           </Row>
         )}
       </div>
