@@ -107,7 +107,7 @@ const AbilityScore = ({ monsterIndex }) => {
   return (
     <Card>
       <Card.Body className="AbilityScoreBody">
-        <Card.Title className="radar-title">Ability Scores Radar Chart</Card.Title>
+        <Card.Title className="radar-title">Ability Scores </Card.Title>
         <div className="chart-container">
           <Radar data={data} options={options} />
         </div>

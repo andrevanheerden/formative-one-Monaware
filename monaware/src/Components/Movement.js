@@ -102,7 +102,7 @@ const Movement = ({ monsterIndex }) => {
   return (
     <Card>
       <Card.Body className="MovementBody">
-        <Card.Title className="Movement-title">Ability Scores Bar Chart</Card.Title>
+        <Card.Title className="Movement-title">Movement and Vision </Card.Title>
         <div className="Movement-container">
           <Bar data={data} options={options} />
         </div>

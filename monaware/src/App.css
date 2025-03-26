@@ -449,7 +449,7 @@ canvas {
 .Movement-container canvas {
   width: 100% !important; /* Maintain aspect ratio */
   height: 100% !important; /* Set a fixed height */
-  max-width: 700px; /* Optional: Limit the maximum width */
+  
   margin: 0 auto; /* Center the canvas horizontally */
 }
 
