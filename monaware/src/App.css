@@ -181,6 +181,8 @@ body {
 }
 
 /* Search Form */
+
+
 .search-form {
   margin-bottom: 20px;
 }
@@ -315,10 +317,10 @@ body {
 /* Card Styles */
 .AbilityScoreBody {
   width: 700px;
-  height: 900px;
+  height: 930px;
   border-color: #AB0E0B;
   border-style: solid;
-  margin: 20px auto;
+  
   padding: 20px;
   border-radius: 20px;
   background-color: rgb(2, 5, 4, 0.95); /* Dark background for better contrast */

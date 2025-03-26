@@ -4,6 +4,9 @@ import { Row, Col, Form } from 'react-bootstrap';
 import monsterImages from "../Assets/images/monsterImages";
 import "../App.css";
 
+// Default image when no match is found
+const DEFAULT_MONSTER_IMAGE = "https://www.dndbeyond.com/avatars/thumbnails/0/1/1000/1000/636252756157427258.jpeg";
+
 const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [cardDetails1, setCardDetails1] = useState([]);
   const [cardDetails2, setCardDetails2] = useState([]);
@@ -15,6 +18,8 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [loading2, setLoading2] = useState(true);
   const [error1, setError1] = useState(null);
   const [error2, setError2] = useState(null);
+  const [imageLoading1, setImageLoading1] = useState(true);
+  const [imageLoading2, setImageLoading2] = useState(true);
   const [imageError1, setImageError1] = useState(false);
   const [imageError2, setImageError2] = useState(false);
 
@@ -29,11 +34,22 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
       return;
     }
     setLoading1(true);
+    setImageLoading1(true);
     setError1(null);
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails1([response.data]);
       onDataset1Change(monsterIndex);
+      
+      // Preload the image
+      const img = new Image();
+      img.src = getMonsterImage(monsterIndex);
+      img.onload = () => setImageLoading1(false);
+      img.onerror = () => {
+        console.warn(`Failed to preload image for monster: ${response.data.name}`);
+        setImageError1(true);
+        setImageLoading1(false);
+      };
     } catch (err) {
       console.error("Error fetching dataset 1:", err);
       setError1("Monster not found. Please try again.");
@@ -48,11 +64,22 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
       return;
     }
     setLoading2(true);
+    setImageLoading2(true);
     setError2(null);
     try {
       const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
       setCardDetails2([response.data]);
       onDataset2Change(monsterIndex);
+      
+      // Preload the image
+      const img = new Image();
+      img.src = getMonsterImage(monsterIndex);
+      img.onload = () => setImageLoading2(false);
+      img.onerror = () => {
+        console.warn(`Failed to preload image for monster: ${response.data.name}`);
+        setImageError2(true);
+        setImageLoading2(false);
+      };
     } catch (err) {
       console.error("Error fetching dataset 2:", err);
       setError2("Monster not found. Please try again.");
@@ -96,58 +123,66 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   };
 
   const getMonsterImage = (monsterIndex) => {
-    if (!monsterIndex) return "https://via.placeholder.com/340";
+    if (!monsterIndex) return DEFAULT_MONSTER_IMAGE;
     
-    // Try exact match first
-    const exactMatch = monsterImages.sample.find(
-      entry => entry.description === monsterIndex
-    );
-    if (exactMatch) return exactMatch.imageUrl;
+    // Clean up the monster index for matching
+    const cleanIndex = monsterIndex.toLowerCase().replace(/-/g, ' ').trim();
     
-    // Try replacing hyphens with spaces and lowercase
-    const formattedIndex = monsterIndex.replace(/-/g, ' ');
-    const formattedMatch = monsterImages.sample.find(
-      entry => entry.description.toLowerCase() === formattedIndex.toLowerCase()
-    );
-    if (formattedMatch) return formattedMatch.imageUrl;
-    
-    // Try partial matching
-    const partialMatch = monsterImages.sample.find(
-      entry => monsterIndex.includes(entry.description.replace(/-/g, '')) || 
-              entry.description.includes(monsterIndex.replace(/-/g, ''))
-    );
-    if (partialMatch) return partialMatch.imageUrl;
-    
-    // Default placeholder
-    return "https://via.placeholder.com/340";
+    // Try different matching strategies
+    const matches = monsterImages.sample.filter(entry => {
+      const cleanDescription = entry.description.toLowerCase().replace(/-/g, ' ').trim();
+      return (
+        cleanDescription === cleanIndex || // exact match
+        cleanDescription.includes(cleanIndex) || // description contains our index
+        cleanIndex.includes(cleanDescription) || // our index contains description
+        cleanDescription.replace(/\s+/g, '') === cleanIndex.replace(/\s+/g, '') // same letters without spaces
+      );
+    });
+
+    // Return the first match if found, otherwise default image
+    return matches.length > 0 ? matches[0].imageUrl : DEFAULT_MONSTER_IMAGE;
   };
 
   const displayCard = (card, index, isFirstCard) => {
+    const imageUrl = getMonsterImage(card.index);
+    const isLoading = isFirstCard ? imageLoading1 : imageLoading2;
+    const isError = isFirstCard ? imageError1 : imageError2;
+
     return (
       <Col key={index} md={12} className="mb-4">
         <div className="info-card">
           <div className='InfoCardBody'>
             <h3 className='InfoCardTitle'>{card.name}</h3>
-            <img
-              src={isFirstCard 
-                ? (imageError1 ? "https://via.placeholder.com/340" : getMonsterImage(card.index))
-                : (imageError2 ? "https://via.placeholder.com/340" : getMonsterImage(card.index))}
-              alt={card.name}
-              className="InfoCardImg"
-              onError={() => isFirstCard ? setImageError1(true) : setImageError2(true)}
-            />
+            <div className="image-container">
+              {isLoading && (
+                <div className="image-loading-placeholder">
+                  Loading image...
+                </div>
+              )}
+              <img
+                src={isError ? DEFAULT_MONSTER_IMAGE : imageUrl}
+                alt={card.name}
+                className={`InfoCardImg ${isLoading ? 'hidden' : 'fade-in'}`}
+                onLoad={() => isFirstCard ? setImageLoading1(false) : setImageLoading2(false)}
+                onError={() => {
+                  console.warn(`Failed to load image for monster: ${card.name}`);
+                  isFirstCard ? setImageError1(true) : setImageError2(true);
+                  isFirstCard ? setImageLoading1(false) : setImageLoading2(false);
+                }}
+              />
+            </div>
             <div className='InfoCardText'>
-              <p>HP : {card.hit_points || "Unknown"}</p>
-              <p>AC : {Array.isArray(card.armor_class) ? card.armor_class.map(ac => ac.value).join(", ") : card.armor_class || "Unknown"}</p>
-              <p>Size : {card.size}</p>
-              <p>Type : {card.type}</p>
-              <p>Alignment : {card.alignment || "Unknown"}</p>
-              <p>Damage Vulnerabilities : {card.damage_vulnerabilities?.join(", ") || "None"}</p>
-              <p>Damage Resistances : {card.damage_resistances?.join(", ") || "None"}</p>
-              <p>Damage Immunities : {card.damage_immunities?.join(", ") || "None"}</p>
-              <p>Languages : {card.languages || "Unknown"}</p>
-              <p>Challenge Rating : {card.challenge_rating || "Unknown"}</p>
-              <p>XP : {card.xp || "Unknown"}</p>
+              <p><strong>HP:</strong> {card.hit_points || "Unknown"}</p>
+              <p><strong>AC:</strong> {Array.isArray(card.armor_class) ? card.armor_class.map(ac => ac.value).join(", ") : card.armor_class || "Unknown"}</p>
+              <p><strong>Size:</strong> {card.size}</p>
+              <p><strong>Type:</strong> {card.type}</p>
+              <p><strong>Alignment:</strong> {card.alignment || "Unknown"}</p>
+              <p><strong>Damage Vulnerabilities:</strong> {card.damage_vulnerabilities?.join(", ") || "None"}</p>
+              <p><strong>Damage Resistances:</strong> {card.damage_resistances?.join(", ") || "None"}</p>
+              <p><strong>Damage Immunities:</strong> {card.damage_immunities?.join(", ") || "None"}</p>
+              <p><strong>Languages:</strong> {card.languages || "Unknown"}</p>
+              <p><strong>Challenge Rating:</strong> {card.challenge_rating || "Unknown"}</p>
+              <p><strong>XP:</strong> {card.xp || "Unknown"}</p>
             </div>
           </div>
         </div>

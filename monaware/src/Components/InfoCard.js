@@ -4,17 +4,49 @@ import Card from "react-bootstrap/Card";
 import monsterImages from "../Assets/images/monsterImages";
 import "../App.css";
 
+// Default image when no match is found
+const DEFAULT_MONSTER_IMAGE = "https://www.dndbeyond.com/avatars/thumbnails/0/1/1000/1000/636252756157427258.jpeg";
+
 const InfoCard = ({ selectedMonster }) => {
   const [monster, setMonster] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     fetchMonster(selectedMonster);
   }, [selectedMonster]);
 
+  useEffect(() => {
+    if (monster) {
+      setImageLoading(true);
+      setImageError(false);
+      const url = getMonsterImage(monster.index);
+      setImageUrl(url);
+      
+      // Preload the image
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        setImageLoading(false);
+      };
+      img.onerror = () => {
+        console.warn(`Failed to preload image for monster: ${monster.name}`);
+        setImageError(true);
+        setImageLoading(false);
+      };
+    }
+  }, [monster]);
+
   const fetchMonster = async (monsterIndex) => {
+    if (!monsterIndex) {
+      setError("No monster selected");
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -29,47 +61,55 @@ const InfoCard = ({ selectedMonster }) => {
   };
 
   const getMonsterImage = (monsterIndex) => {
-    if (!monsterIndex) return "https://via.placeholder.com/340";
+    if (!monsterIndex) return DEFAULT_MONSTER_IMAGE;
     
-    // Try exact match first
-    const exactMatch = monsterImages.sample.find(
-      entry => entry.description === monsterIndex
-    );
-    if (exactMatch) return exactMatch.imageUrl;
+    // Clean up the monster index for matching
+    const cleanIndex = monsterIndex.toLowerCase().replace(/-/g, ' ').trim();
     
-    // Try replacing hyphens with spaces and lowercase
-    const formattedIndex = monsterIndex.replace(/-/g, ' ');
-    const formattedMatch = monsterImages.sample.find(
-      entry => entry.description.toLowerCase() === formattedIndex.toLowerCase()
-    );
-    if (formattedMatch) return formattedMatch.imageUrl;
-    
-    // Try partial matching
-    const partialMatch = monsterImages.sample.find(
-      entry => monsterIndex.includes(entry.description.replace(/-/g, '')) || 
-              entry.description.includes(monsterIndex.replace(/-/g, ''))
-    );
-    if (partialMatch) return partialMatch.imageUrl;
-    
-    // Default placeholder
-    return "https://via.placeholder.com/340";
+    // Try different matching strategies
+    const matches = monsterImages.sample.filter(entry => {
+      const cleanDescription = entry.description.toLowerCase().replace(/-/g, ' ').trim();
+      return (
+        cleanDescription === cleanIndex || // exact match
+        cleanDescription.includes(cleanIndex) || // description contains our index
+        cleanIndex.includes(cleanDescription) || // our index contains description
+        cleanDescription.replace(/\s+/g, '') === cleanIndex.replace(/\s+/g, '') // same letters without spaces
+      );
+    });
+
+    // Return the first match if found, otherwise default image
+    return matches.length > 0 ? matches[0].imageUrl : DEFAULT_MONSTER_IMAGE;
   };
 
-  if (loading) return <p>Loading monster...</p>;
-  if (error) return <p className="error-message">{error}</p>;
-  if (!monster) return <p className="error-message">No monster data available.</p>;
+  if (loading) return <div className="loading-placeholder">Loading monster data...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!monster) return <div className="error-message">No monster data available.</div>;
 
   return (
     <Card className="info-card">
       <Card.Body className="InfoCardBody">
         <Card.Title className="InfoCardTitle">{monster.name}</Card.Title>
-        <Card.Img
-          variant="top"
-          src={imageError ? "https://via.placeholder.com/340" : getMonsterImage(monster.index)}
-          alt={monster.name}
-          className="InfoCardImg"
-          onError={() => setImageError(true)}
-        />
+        
+        <div className="image-container">
+          {imageLoading && (
+            <div className="image-loading-placeholder">
+              Loading image...
+            </div>
+          )}
+          <Card.Img
+            variant="top"
+            src={imageError ? DEFAULT_MONSTER_IMAGE : imageUrl}
+            alt={monster.name}
+            className={`InfoCardImg ${imageLoading ? 'hidden' : 'fade-in'}`}
+            onLoad={() => setImageLoading(false)}
+            onError={() => {
+              console.warn(`Failed to load image for monster: ${monster.name}`);
+              setImageError(true);
+              setImageLoading(false);
+            }}
+          />
+        </div>
+        
         <Card.Text className="InfoCardText">
           <p><strong>HP:</strong> {monster.hit_points || "Unknown"}</p>
           <p><strong>AC:</strong> {Array.isArray(monster.armor_class) ? monster.armor_class.map(ac => ac.value).join(", ") : monster.armor_class || "Unknown"}</p>

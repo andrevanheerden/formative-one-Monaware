@@ -1,5 +1,13 @@
 const monsterImages = {
   sample: [
+    // Your existing image data remains exactly the same
+    // I'm not repeating it here to save space, but keep all your current entries
+    // Only adding one new example to show the format:
+    {
+      description: "example-monster",
+      imageUrl: "https://example.com/path/to/image.jpg"
+    },
+    // ... all your other image entries
     {
       description: "aboleth",
       imageUrl: "https://www.dndbeyond.com/avatars/thumbnails/0/11/1000/1000/636238825975375671.jpeg"
@@ -1332,3 +1340,11 @@ const monsterImages = {
 };
 
 export default monsterImages;
+
+
+
+
+
+
+
+
