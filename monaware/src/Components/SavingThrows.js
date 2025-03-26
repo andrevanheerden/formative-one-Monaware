@@ -9,14 +9,14 @@ import "../App.css";
 ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
 const SavingThrows = ({ monsterIndex }) => {
-  const [savingThrows, setSavingThrows] = useState([]);
+  const [monster, setMonster] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSavingThrows = async () => {
+    const fetchMonster = async () => {
       if (!monsterIndex) {
-        setError("Monster index is required to fetch saving throws.");
+        setError("Monster index is required");
         setLoading(false);
         return;
       }
@@ -26,87 +26,79 @@ const SavingThrows = ({ monsterIndex }) => {
 
       try {
         const response = await axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex}`);
-        const monsterData = response.data;
-
-        // Initialize saving throws with null values
-        const throws = {
-          Strength: null,
-          Dexterity: null,
-          Constitution: null,
-          Intelligence: null,
-          Wisdom: null,
-          Charisma: null,
-        };
-
-        // Extract saving throws from proficiencies
-        if (monsterData.proficiencies) {
-          monsterData.proficiencies.forEach((proficiency) => {
-            const name = proficiency.proficiency.name;
-            if (name.startsWith("Saving Throw:")) {
-              const ability = name.split(": ")[1];
-              throws[ability] = proficiency.value;
-            }
-          });
-        }
-
-        // Replace null values with 0 only if no other value exists
-        const finalThrows = Object.entries(throws).map(([key, value]) => value ?? 0);
-        setSavingThrows(finalThrows);
+        setMonster(response.data);
+        console.log('Monster Data:', response.data);
       } catch (err) {
-        console.error("Error fetching saving throws:", err);
-        setError("Failed to load saving throws.");
+        console.error('Error fetching monster data:', err);
+        setError("Failed to load monster data");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSavingThrows();
+    fetchMonster();
   }, [monsterIndex]);
 
-  if (loading) return <p>Loading saving throws...</p>;
-  if (error) return <p>{error}</p>;
-  if (!savingThrows.length) return <p>No saving throw data available.</p>;
+  const getProficiencyData = (monster) => {
+    return monster.proficiencies?.map((proficiency) => ({
+      name: proficiency.proficiency.name,
+      value: proficiency.value,
+    })) || [];
+  };
 
-  // Create labels without numbers
-  const abilityNames = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
-  const formattedLabels = abilityNames;
+  const getSavingThrow = (monster, ability) => {
+    try {
+      if (!monster.proficiencies) return 0;
+      
+      const abilityShort = ability.substring(0, 3).toUpperCase();
+      const savingThrow = monster.proficiencies.find(prof => 
+        prof.proficiency?.name?.includes(`Saving Throw: ${abilityShort}`)
+      );
+      
+      return savingThrow?.value || 0;
+    } catch (error) {
+      console.error(`Error getting saving throw for ${ability}:`, error);
+      return 0;
+    }
+  };
 
-  const data = {
-    labels: formattedLabels,
-    datasets: [
-      {
-        label: "Saving Throws",
-        data: savingThrows,
-        fill: true,
-        borderColor: "rgba(171, 14, 11, 1)",
-        borderWidth: 2,
-        pointBackgroundColor: "rgba(171, 14, 11, 1)",
-        pointBorderColor: "#333",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(171, 14, 11, 1)",
-        backgroundColor: "rgba(171, 14, 11, 0.5)",
-      },
-    ],
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="error-message">{error}</p>;
+  if (!monster) return <p className="error-message">No monster data available</p>;
+
+  const monsterProficiencies = getProficiencyData(monster);
+  console.log('Monster Proficiencies:', monsterProficiencies);
+
+  const savingThrowData = {
+    labels: ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'],
+    datasets: [{
+      label: `${monster.name} Saving Throws`,
+      data: [
+        getSavingThrow(monster, 'Strength'),
+        getSavingThrow(monster, 'Dexterity'),
+        getSavingThrow(monster, 'Constitution'),
+        getSavingThrow(monster, 'Intelligence'),
+        getSavingThrow(monster, 'Wisdom'),
+        getSavingThrow(monster, 'Charisma'),
+      ],
+      borderColor: 'rgba(171, 14, 11, 1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(171, 14, 11, 1)',
+      fill: true,
+      backgroundColor: 'rgba(171, 14, 11, 0.5)',
+    }]
   };
 
   const options = {
     scales: {
       r: {
-        angleLines: {
-          display: true,
-          color: "white",
-        },
-        grid: {
-          color: "white",
-        },
+        angleLines: { display: true, color: '#fff' },
+        grid: { color: '#fff' },
         suggestedMin: 0,
         suggestedMax: 25,
         pointLabels: {
-          color: "white",
-          font: {
-            size: 16,
-            family: '"Chakra Petch", sans-serif',
-          },
+          color: 'white',
+          font: { size: 16, family: '"Chakra Petch", sans-serif' },
         },
       },
     },
@@ -114,35 +106,28 @@ const SavingThrows = ({ monsterIndex }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
         labels: {
-          color: "white",
-          font: {
-            size: 16,
-            family: '"Chakra Petch", sans-serif',
-          },
+          color: 'white',
+          font: { size: 16, family: '"Chakra Petch", sans-serif' },
         },
       },
-      tooltip: {
-        enabled: true,
-        callbacks: {
-          label: function(context) {
-            return context.dataset.label + ': ' + context.raw;
-          }
-        }
-      },
+      tooltip: { enabled: true },
     },
   };
 
   return (
-    <Card>
-      <Card.Body className="SavingThrowsBody">
-        <Card.Title className="SavingThrows-title">Saving Throws Radar Chart</Card.Title>
-        <div className="SavingThrows-container">
-          <Radar data={data} options={options} />
-        </div>
-      </Card.Body>
-    </Card>
+    <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+      <Card >
+        <Card.Body className="SavingThrowsBody">
+          <Card.Title className="SavingThrows-title">Saving Throws</Card.Title>
+          <div className="chart-container">
+            <Radar data={savingThrowData} options={options} />
+          </div>
+
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 

@@ -22,6 +22,10 @@ const AbilityComparison = ({ dataset1, dataset2 }) => {
         ]);
         setMonster1(response1.data);
         setMonster2(response2.data);
+
+        // Log the fetched data for debugging
+        console.log('Monster 1 Data:', response1.data);
+        console.log('Monster 2 Data:', response2.data);
       } catch (error) {
         console.error('Error fetching monster data:', error);
       } finally {
@@ -33,7 +37,7 @@ const AbilityComparison = ({ dataset1, dataset2 }) => {
   }, [dataset1, dataset2]);
 
   if (loading) return <p>Loading...</p>;
-  if (!monster1 || !monster2) return <p>Failed to load monster data.</p>;
+  if (!monster1 || !monster2) return <p className="error-message">Failed to load monster data.</p>;
 
   const abilityData = {
     labels: ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma'],
@@ -104,7 +108,7 @@ const AbilityComparison = ({ dataset1, dataset2 }) => {
     <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
       <Card style={{ width: '45%', marginRight: '60px' }}>
         <Card.Body className="AbilityScoreBody">
-          <Card.Title className="radar-title">Ability Scores</Card.Title>
+          <Card.Title className="radar-title">Ability Scores Comparison</Card.Title>
           <div className="chart-container">
             <Radar data={abilityData} options={options} />
           </div>

@@ -70,7 +70,20 @@ body {
 
 
 
-
+.Timeline-card {
+  width: 1500px; /* Fixed width for the main card */
+  height: 3509px; /* Fixed height for the main card */
+  background-color: rgba(2, 5, 4, 0.95); /* Dark background */
+  border-radius: 20px;
+  border: 2px solid #AB0E0B; /* Red border */
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-rows: repeat(3, 1fr); /* Three rows */
+  gap: 20px; /* Space between grid items */
+  margin-left: 350px;
+  margin-top: 20px;
+}
 
 
 
@@ -865,4 +878,9 @@ canvas {
 /* Dataset 2 Card Outline */
 .dataset-2 .info-card {
   border: 2px solid rgb(0, 162, 255); /* Blue border for dataset 2 cards */
+}
+
+.error-message {
+  color: white;
+  font-size: 24px;
 }

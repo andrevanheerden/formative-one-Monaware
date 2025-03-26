@@ -35,8 +35,8 @@ const InfoCard = ({ selectedMonster }) => {
   };
 
   if (loading) return <p>Loading monster...</p>;
-  if (error) return <p>{error}</p>;
-  if (!monster) return <p>No monster data available.</p>;
+  if (error) return <p className="error-message">{error}</p>;
+  if (!monster) return <p className="error-message">No monster data available.</p>;
 
   return (
     <Card className="info-card">

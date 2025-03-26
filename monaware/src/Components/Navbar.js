@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
 import "../App.css";
 import logo from "../Assets/images/logo.png";
 
@@ -8,31 +9,27 @@ function Navbar({ onMonsterSelect }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchChange = async (e) => {
-    const query = e.target.value;
+  const handleSearch = async (query) => {
     setSearchQuery(query);
-
-    if (query.length < 3) {
-      setSearchResults([]); // Clear results if query is too short
+    if (!query) {
+      setSearchResults([]);
       return;
     }
-
     try {
-      const response = await fetch("https://www.dnd5eapi.co/api/monsters");
-      const data = await response.json();
-      const filteredResults = data.results.filter((monster) =>
+      const response = await axios.get(`https://www.dnd5eapi.co/api/monsters`);
+      const filteredResults = response.data.results.filter((monster) =>
         monster.name.toLowerCase().includes(query.toLowerCase())
       );
       setSearchResults(filteredResults);
     } catch (err) {
-      console.error("Error fetching monsters:", err);
+      console.error("Error searching monsters:", err);
     }
   };
 
-  const handleMonsterSelect = (monsterIndex) => {
-    onMonsterSelect(monsterIndex); // Notify parent with the selected monster index
-    setSearchQuery(""); // Clear the search input
-    setSearchResults([]); // Clear the search results
+  const handleSelectMonster = (monsterIndex) => {
+    onMonsterSelect(monsterIndex); // Notify parent component
+    setSearchQuery("");
+    setSearchResults([]);
   };
 
   return (
@@ -52,7 +49,7 @@ function Navbar({ onMonsterSelect }) {
             type="text"
             placeholder="Search"
             value={searchQuery}
-            onChange={handleSearchChange}
+            onChange={(e) => handleSearch(e.target.value)}
             className="search-input"
           />
           {/* Dropdown for search results */}
@@ -62,12 +59,15 @@ function Navbar({ onMonsterSelect }) {
                 <div
                   key={result.index}
                   className="search-result-item"
-                  onClick={() => handleMonsterSelect(result.index)}
+                  onClick={() => handleSelectMonster(result.index)}
                 >
                   {result.name}
                 </div>
               ))}
             </div>
+          )}
+          {searchResults.length === 0 && searchQuery && (
+            <p className="error-message">No results found.</p>
           )}
         </form>
 

@@ -160,7 +160,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
             </div>
           )}
         </Form>
-        {loading1 ? <p>Loading...</p> : error1 ? <p>{error1}</p> : (
+        {loading1 ? <p>Loading...</p> : error1 ? <p className="error-message">{error1}</p> : (
           <Row className='cards-container'>
             {cardDetails1.map((card, index) => displayCard(card, index))}
           </Row>
@@ -195,7 +195,7 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
             </div>
           )}
         </Form>
-        {loading2 ? <p>Loading...</p> : error2 ? <p>{error2}</p> : (
+        {loading2 ? <p>Loading...</p> : error2 ? <p className="error-message">{error2}</p> : (
           <Row className='cards-container'>
             {cardDetails2.map((card, index) => displayCard(card, index))}
           </Row>

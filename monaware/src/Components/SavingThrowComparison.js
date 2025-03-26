@@ -22,6 +22,10 @@ const SavingThrowComparison = ({ dataset1, dataset2 }) => {
         ]);
         setMonster1(response1.data);
         setMonster2(response2.data);
+
+        // Log the fetched data for debugging
+        console.log('Monster 1 Data:', response1.data);
+        console.log('Monster 2 Data:', response2.data);
       } catch (error) {
         console.error('Error fetching monster data:', error);
       } finally {
@@ -33,11 +37,36 @@ const SavingThrowComparison = ({ dataset1, dataset2 }) => {
   }, [dataset1, dataset2]);
 
   if (loading) return <p>Loading...</p>;
-  if (!monster1 || !monster2) return <p>Failed to load monster data.</p>;
+  if (!monster1 || !monster2) return <p className="error-message">Failed to load monster data.</p>;
+
+  // Extract proficiency data
+  const getProficiencyData = (monster) => {
+    return monster.proficiencies?.map((proficiency) => ({
+      name: proficiency.proficiency.name,
+      value: proficiency.value,
+    })) || [];
+  };
+
+  const monster1Proficiencies = getProficiencyData(monster1);
+  const monster2Proficiencies = getProficiencyData(monster2);
+
+  console.log('Monster 1 Proficiencies:', monster1Proficiencies);
+  console.log('Monster 2 Proficiencies:', monster2Proficiencies);
 
   const getSavingThrow = (monster, ability) => {
-    // Ensure the saving throw exists, otherwise fallback to 0
-    return monster[`${ability.toLowerCase()}_save`] || 0;
+    try {
+      if (!monster.proficiencies) return 0;
+      
+      const abilityShort = ability.substring(0, 3).toUpperCase();
+      const savingThrow = monster.proficiencies.find(prof => 
+        prof.proficiency?.name?.includes(`Saving Throw: ${abilityShort}`)
+      );
+      
+      return savingThrow?.value || 0;
+    } catch (error) {
+      console.error(`Error getting saving throw for ${ability}:`, error);
+      return 0;
+    }
   };
 
   const savingThrowData = {
@@ -113,6 +142,8 @@ const SavingThrowComparison = ({ dataset1, dataset2 }) => {
           <div className="chart-container">
             <Radar data={savingThrowData} options={options} />
           </div>
+          {/* Display proficiency data */}
+
         </Card.Body>
       </Card>
     </div>
