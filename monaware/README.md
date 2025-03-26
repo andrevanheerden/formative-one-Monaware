@@ -68,3 +68,17 @@ Monaware was created for DM to have a quick way to look and compare monster data
 ## Wireframes
 
 ![Wireframe](https://github.com/andrevanheerden/formative-one-Monaware/blob/main/monaware/src/Assets/images/Wireframes/wierframe.png)
+
+## Monaware development process
+
+### Highlights
+
+The highlight of my page from me is the comparison page as the radar charts and bar charts on this page has came out very well and i think having to data sets in one charts gave the comparison page a massive step up and make it easy for users to compare data.
+
+### Challenges
+
+my first challenge was with the images provided by the Api as 70% of the images was not available. To fix this i had to go to there discord were i found that another users has made a list of monster ands and URL to there images with i converted into a react import file to display the images to in the carts.
+
+my second challenge was with the timeline bar chart with storing data so i had to set up a storage.js file to put this data in a locale json storage.
+
+## Demo Vidio
