@@ -9,18 +9,18 @@ const SkillsComparison = () => {
   // State for two datasets (e.g., two characters' skills)
   const [skills1, setSkills1] = useState({
     strength: { Athletics: 0 },
-    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 7 },
+    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 0 },
     intelligence: { Arcana: 0, History: 0, Investigation: 0, Nature: 0, Religion: 0 },
     wisdom: { "Animal Handling": 0, Insight: 0, Medicine: 0, Perception: 0, Survival: 0 },
-    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 11 },
+    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 0 },
   });
 
   const [skills2, setSkills2] = useState({
     strength: { Athletics: 0 },
-    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 2 },
+    dexterity: { Acrobatics: 0, "Sleight of Hand": 0, Stealth: 0 },
     intelligence: { Arcana: 0, History: 0, Investigation: 0, Nature: 0, Religion: 0 },
     wisdom: { "Animal Handling": 0, Insight: 0, Medicine: 0, Perception: 0, Survival: 0 },
-    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 4 },
+    charisma: { Deception: 0, Intimidation: 0, Performance: 0, Persuasion: 0 },
   });
 
   // Function to handle skill changes for the first dataset

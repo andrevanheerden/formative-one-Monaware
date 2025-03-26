@@ -4,8 +4,9 @@ import InfoComparison from "./InfoComparison";
 import AbilityComparison from "./AbilityComparison";
 import MovementComparison from "./MovementComparison";
 import SkillsComparison from "./SkillsComparison";
-import SavingThrowComparison from "./SavingThrowComparison";
+
 import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function Comparison() {
   const [dataset1, setDataset1] = useState('adult-black-dragon');
@@ -13,9 +14,7 @@ function Comparison() {
 
   return (
     <div className="Comparison">
-      {/* Main Card */}
       <div className="main-comparison-card">
-
         <div className="Info-Comparison">
           <InfoComparison
             onDataset1Change={setDataset1}
@@ -23,28 +22,27 @@ function Comparison() {
           />
         </div>
 
-        <div className="Ability-Comparison">
-          <AbilityComparison dataset1={dataset1} dataset2={dataset2} />
-        </div>
-
-        <div className="SavingThrow-Comparison">
-          <SavingThrowComparison dataset1={dataset1} dataset2={dataset2} />
-        </div>
+        {/* Side-by-side charts container */}
+          <div className="chart-wrapper">
+            <AbilityComparison dataset1={dataset1} dataset2={dataset2} />
+          </div>
 
         <div className="movement-comp">
-          <MovementComparison />
+          <MovementComparison dataset1={dataset1} dataset2={dataset2}  />
         </div>
 
         <div className="Skill-com">
-          <SkillsComparison />
+          <SkillsComparison  />
         </div>
-
-
-
-
+      
       </div>
+
+
     </div>
+
+    
   );
 }
+
 
 export default Comparison;

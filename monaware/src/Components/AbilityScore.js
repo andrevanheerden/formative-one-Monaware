@@ -72,13 +72,8 @@ const AbilityScore = ({ monsterIndex }) => {
   const options = {
     scales: {
       r: {
-        angleLines: {
-          display: true,
-          color: 'white',
-        },
-        grid: {
-          color: 'white',
-        },
+        angleLines: { display: true, color: 'rgba(255, 255, 255, 0.3)' },
+        grid: { color: 'rgba(255, 255, 255, 0.3)' },
         suggestedMin: 0,
         suggestedMax: 25,
         pointLabels: {

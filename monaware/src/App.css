@@ -679,6 +679,104 @@ canvas {
 }
 
 
+/* CombinedRadarCharts.css */
+
+.combined-radar-card {
+  background-color: rgba(2, 5, 4, 0.95);
+  color: white;
+  border-radius: 20px;
+  border: 2px solid #AB0E0B;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.95);
+  margin: 20px auto;
+  width: 95%;
+  max-width: 1600px;
+  height: 800px;
+}
+
+.combined-radar-body {
+  padding: 30px;
+}
+
+.radar-charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.radar-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 650px;
+  height: 650px;
+
+}
+
+.radar-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+  font-family: "Chakra Petch", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.radar-container {
+  width: 630px;
+  height: 630px;
+  position: relative;
+}
+
+.error-message {
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-family: '"Chakra Petch", sans-serif';
+  font-size: 18px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1500px) {
+  .radar-chart-wrapper {
+    width: 600px;
+    height: 600px;
+  }
+  .radar-container {
+    width: 600px;
+    height: 600px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .radar-charts-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .radar-chart-wrapper {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+  .radar-container {
+    width: 100%;
+    height: 400px;
+  }
+  .radar-title {
+    font-size: 22px;
+  }
+}
+
+
+
+
+
+
 /*movement comparison*/
 
 /* MovementComparison.css */
