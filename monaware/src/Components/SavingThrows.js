@@ -120,7 +120,7 @@ const SavingThrows = ({ monsterIndex }) => {
     <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
       <Card >
         <Card.Body className="SavingThrowsBody">
-          <Card.Title className="SavingThrows-title">Saving Throws</Card.Title>
+          <Card.Title className="SavingThrows-title">Saving Throws Bonus</Card.Title>
           <div className="chart-container">
             <Radar data={savingThrowData} options={options} />
           </div>

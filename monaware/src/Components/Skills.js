@@ -82,7 +82,7 @@ const SkillsCard = ({ monsterIndex }) => {
     <div className="card-container">
       <Card style={{ width: '24rem', margin: '10px' }}>
         <Card.Body className='SkillBody'>
-          <Card.Title className='SkillTitle'>Skills</Card.Title>
+          <Card.Title className='SkillTitle'>Skills Bonus</Card.Title>
           <div className="skills-container">
             <div className="skill-column">
               {/* First Column */}

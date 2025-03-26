@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import "../App.css";
 
-const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 = 'blue-dragon-wyrmling' }) => {
+const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 = 'adult-blue-dragon' }) => {
   // State initialization
   const [monsters, setMonsters] = useState({
     monster1: null,
@@ -17,15 +17,19 @@ const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 
     const fetchMonsters = async () => {
       try {
         setLoading(true);
+        setError(null);
         
+        // Reset monsters while loading new ones
+        setMonsters({
+          monster1: null,
+          monster2: null
+        });
+
         // Fetch both monsters in parallel
         const [monster1, monster2] = await Promise.all([
           axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex1}`),
           axios.get(`https://www.dnd5eapi.co/api/monsters/${monsterIndex2}`)
         ]);
-
-        console.log('Monster 1 data:', monster1.data);
-        console.log('Monster 2 data:', monster2.data);
 
         setMonsters({
           monster1: monster1.data,
@@ -41,15 +45,12 @@ const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 
     };
 
     fetchMonsters();
-  }, [monsterIndex1, monsterIndex2]);
+  }, [monsterIndex1, monsterIndex2]);  // This will re-run when props change
 
   // Extract skills from monster data
   const extractSkills = (monsterData) => {
     if (!monsterData || !monsterData.proficiencies) return null;
     
-    console.log('Processing proficiencies for:', monsterData.name);
-    console.log('Raw proficiencies:', monsterData.proficiencies);
-
     // Initialize skills structure
     const skills = {
       strength: { Athletics: 0 },
@@ -75,7 +76,6 @@ const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 
       }
     });
 
-    console.log('Extracted skills:', skills);
     return skills;
   };
 
@@ -119,8 +119,8 @@ const SkillsComparison = ({ monsterIndex1 = 'adult-black-dragon', monsterIndex2 
         <Card.Body className='SkillsComparisonBody'>
           <Card.Title className='SkillsComparisonTitle'>Skills Comparison</Card.Title>
           <div className="SkillsComparison-grid">
-            {renderSkills(monster1Skills, monsters.monster1?.name)}
-            {renderSkills(monster2Skills, monsters.monster2?.name)}
+            {monsters.monster1 && renderSkills(monster1Skills, monsters.monster1.name)}
+            {monsters.monster2 && renderSkills(monster2Skills, monsters.monster2.name)}
           </div>
         </Card.Body>
       </Card>
