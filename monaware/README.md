@@ -26,21 +26,20 @@ Clone the repo:
 ```
 https://github.com/andrevanheerden/formative-one-Monaware.git
 ```
-
 #### Step 2:
-
-Install dependencies using terminal:
-
-```
-npm install
-```
-
-#### Step 3:
 
 open monaware file in terminal:
 
 ```
 cd monaware
+```
+
+#### Step 3:
+
+Install dependencies using terminal:
+
+```
+npm install
 ```
 
 #### Step 4:
