@@ -90,4 +90,6 @@ my second challenge was with the timeline bar chart with storing data so i had t
 
 ## Creaters
 
-[Andre van Heerden](https://github.com/andrevanheerden)
+<a href="https://github.com/andrevanheerden/formative-one-Monaware/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=andrevanheerden/formative-one-Monaware" />
+</a>
