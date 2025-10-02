@@ -6,7 +6,7 @@ import MovementComparison from "./MovementComparison";
 import SkillsComparison from "./SkillsComparison";
 
 import { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+
 
 function Comparison() {
   const [dataset1, setDataset1] = useState('adult-black-dragon');
