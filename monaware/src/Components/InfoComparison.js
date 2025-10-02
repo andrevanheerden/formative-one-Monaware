@@ -24,8 +24,12 @@ const InfoComparison = ({ onDataset1Change, onDataset2Change }) => {
   const [imageError2, setImageError2] = useState(false);
 
   useEffect(() => {
-    fetchDataset1("adult-black-dragon");
-    fetchDataset2("ancient-blue-dragon");
+    // Inline the fetch logic to avoid dependency warning
+    (async () => {
+      await fetchDataset1("adult-black-dragon");
+      await fetchDataset2("ancient-blue-dragon");
+    })();
+    // eslint-disable-next-line
   }, []);
 
   const getMonsterImage = (monsterIndex) => {
