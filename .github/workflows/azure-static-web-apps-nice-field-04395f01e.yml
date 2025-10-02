@@ -15,36 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      # Checkout repo
-      - uses: actions/checkout@v3
+      # 1. Checkout repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
 
-      # Use Node 22
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      # Install dependencies and build React app
+      # 3. Install dependencies and build React app
       - name: Install and Build App
         working-directory: ./monaware
         run: |
           npm install
-          CI=false npm run build   # Disable CI to prevent warnings from failing build
+          CI=false npm run build   # Disable CI warnings
 
-      # Deploy to Azure Static Web Apps
-      - name: Build And Deploy
-        id: builddeploy
+      # 4. Deploy to Azure Static Web Apps
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NICE_FIELD_04395F01E }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "./monaware"
-          api_location: ""
-          output_location: "monaware/build"
+          app_location: "monaware"          # Root of your app
+          api_location: ""                  # If you have Azure Functions API, put path here
+          output_location: "monaware/build" # Build folder for React
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -52,9 +52,7 @@ jobs:
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NICE_FIELD_04395F01E }}
           action: "close"
-
