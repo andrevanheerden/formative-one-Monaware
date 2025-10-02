@@ -15,27 +15,26 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      # Checkout repo
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
 
-      # Use Node 22
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: '22.14.0'  # match your local version
 
-      # Install and build React app
-      - name: Install and Build App
+      - name: Install Dependencies
+        run: npm install
         working-directory: ./monaware
-        run: |
-          npm install
-          CI=false npm run build   # Prevent ESLint warnings from breaking build
 
-      # Deploy to Azure Static Web Apps
-      - name: Build And Deploy
+      - name: Build App
+        run: |
+          set CI=false && npm run build
+        working-directory: ./monaware
+
+      - name: Deploy to Azure Static Web Apps
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -44,7 +43,7 @@ jobs:
           action: "upload"
           app_location: "./monaware"
           api_location: ""
-          output_location: "monaware/build"
+          output_location: "build"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
