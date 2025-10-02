@@ -15,24 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      # Checkout repository
+      # Checkout repo
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
 
-      # Setup Node.js 22
+      # Use Node 22
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      # Install dependencies and build React app
+      # Install and build React app
       - name: Install and Build App
         working-directory: ./monaware
         run: |
           npm install
-          CI=false npm run build  # Prevent ESLint warnings from failing build
+          CI=false npm run build   # Prevent ESLint warnings from breaking build
 
       # Deploy to Azure Static Web Apps
       - name: Build And Deploy
