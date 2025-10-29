@@ -4,6 +4,24 @@
 
 # About Monaware
 
+Monaware is an app built using the D&D 5e SRD API, which provides comprehensive data on Dungeons & Dragons 5th Edition, including skills, equipment, spells, monsters, and more. Monaware focuses specifically on the monsters database, allowing users to view all stats and data for monsters or encounters.
+
+Users can access detailed information such as:
+
+Ability Scores (Strength, Dexterity, Constitution, etc.)
+
+Saving Throws
+
+Skills
+
+Hit Points and Armor Class
+
+Attack abilities, damage, and actions
+
+Other important combat and lore-related stats
+
+In addition, Monaware allows users to compare the stats of two monsters or encounters side by side, making it easy to analyze strengths, weaknesses, and overall challenge levels for planning encounters. 
+
 Monaware is a app build by using the [D&D 5e SRD API](https://5e-bits.github.io/docs/). D&D 5e SRD API is a api that has all data on D&D such as skills ,equipment, ect. Monaware uses all data from the monsters database. the images i got from a fill posted on the discord of D&D 5e SRD API because the API does not have 70% of the monsters images.
 
 
